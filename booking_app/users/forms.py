@@ -3,10 +3,10 @@ from django.contrib.auth import authenticate, get_user_model
 
 User = get_user_model()
 
+
 class UserLoginForm(forms.Form):
     email = forms.EmailField(label='Email')
     password = forms.CharField(widget=forms.PasswordInput)
-
 
     def clean(self, *args, **kwargs):
         email = self.cleaned_data.get('email')
@@ -15,9 +15,9 @@ class UserLoginForm(forms.Form):
         if email and password:
             user = authenticate(email=email, password=password)
             if not user:
-                raise forms.ValidationError('This user does not exist!')
+                raise forms.ValidationError('This users does not exist!')
             if not user.is_active:
-                raise forms.ValidationError('This user is not active!')
+                raise forms.ValidationError('This users is not active!')
             return super(UserLoginForm, self).clean(*args, **kwargs)
 
 

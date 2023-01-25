@@ -118,21 +118,17 @@
                   <p class="mb-0">Welcome back! Please enter your details.</p>
                 </div>
                 <div class="card-body">
-                    {% csrf_token %}
                   <form role="form">
-                      {{ form.as_p }}
-                    <label>Name</label>
+                      {% csrf_token %}
                     <div class="mb-3">
-                      <input type="text" class="form-control" placeholder="Enter your name" aria-label="Name" aria-describedby="name-addon">
+                        <label>Email Address</label>
+{#                      <input type="text" class="form-control" placeholder="Enter your name" aria-label="Name" aria-describedby="name-addon">#}
+                        {{ form.email }}
                     </div>
-                    <label>Email Address</label>
-                    <div class="mb-3">
-                      <input type="email" class="form-control" placeholder="Enter your email address" aria-label="Email" aria-describedby="email-addon">
-                    </div>
+                      <div class="mb-3">
                     <label>Password</label>
-                    <div class="mb-3">
-                      <input type="email" class="form-control" placeholder="Enter password" aria-label="Password" aria-describedby="password-addon">
-                    </div>
+                          {{ form.password }}
+                      </div>
                     <div class="d-flex align-items-center">
 {#                      <div class="form-check form-check-info text-left mb-0">#}
 {#                        <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">#}

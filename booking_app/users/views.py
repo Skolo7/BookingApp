@@ -3,15 +3,15 @@ from django.contrib import messages
 from django.contrib.auth.forms import UserCreationForm
 
 def register(request):
-    if request.method == "POST": # warunek zostanie spełniony jeśli user wyśle formularz
-        form = UserCreationForm() # zatem tworzy się obiekt UserCreationForm
+    if request.method == "POST": # formularz
+        form = UserRegistrationForm(request.POST)
         # sprawdzenie czy formularz jest poprawnie wprowadzony przez usera
         if form.is_valid():
-            username = form.cleaned_data.get('username')
-            messages.success(request, f"Account's been created for {username}")
+            form.save()
+            messages.success(request, f"Account has been created")
             return redirect('index')
     else:
-        form = UserCreationForm()
+        form = UserRegistrationForm()
 
 
     return render(request, 'users/register.html', {'form': form})

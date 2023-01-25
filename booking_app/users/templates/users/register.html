@@ -159,18 +159,32 @@
                   <p class="mb-0">Nice to meet you! Please enter your details.</p>
                 </div>
                 <div class="card-body">
-                  <form role="form">
-                    <label>Name</label>
+                  <form action="{%  url 'register' %}" method="POST" action="">
+                      {% csrf_token %}
+
                     <div class="mb-3">
-                      <input type="text" class="form-control" placeholder="Enter your name" aria-label="Name" aria-describedby="name-addon">
+                        <label>First Name</label>
+                        {{ form.first_name }}
                     </div>
-                    <label>Email Address</label>
-                    <div class="mb-3">
-                      <input type="email" class="form-control" placeholder="Enter your email address" aria-label="Email" aria-describedby="email-addon">
+
+                      <div class="mb-3">
+                        <label>Last Name</label>
+                        {{ form.last_name }}
                     </div>
-                    <label>Password</label>
+
                     <div class="mb-3">
-                      <input type="email" class="form-control" placeholder="Create a password" aria-label="Password" aria-describedby="password-addon">
+                        <label>Email Address</label>
+                        {{ form.email }}
+                    </div>
+
+                    <div class="mb-3">
+                        <label>Password</label>
+                        {{ form.password1 }}
+                    </div>
+
+                      <div class="mb-3">
+                        <label>Password Confirmation</label>
+                        {{ form.password2 }}
                     </div>
                     <div class="form-check form-check-info text-left mb-0">
                       <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
@@ -192,7 +206,7 @@
                 <div class="card-footer text-center pt-0 px-lg-2 px-1">
                   <p class="mb-4 text-xs mx-auto">
                     Already have an account?
-                    <a href="login.html" class="text-dark font-weight-bold">Sign in</a>
+                    <a href="{% url 'login' %}" class="text-dark font-weight-bold">Sign in</a>
                   </p>
                 </div>
               </div>

@@ -23,4 +23,4 @@ class Reservation(models.Model):
     )
     person = models.ForeignKey(settings.AUTH_USER_MODEL,
                                on_delete=models.CASCADE, blank = True, null = True)
-    type = models.CharField(max_length=35, choices=ReservationTypes.choices)
+    type = models.CharField(max_length=50, choices=ReservationTypes.choices)

@@ -27,6 +27,12 @@ class Room(models.Model):
 
 
 class Desk(models.Model):
+    class DeskTypes(models.TextChoices):
+        SMALL_DESK = "small_desk", "small_desk"
+        NARROW_DESK = "narrow_desk", "narrow_desk"
+        MEDIUM_DESK = "medium_desk", "medium_desk"
+        LARGE_DESK = "large_desk", "large_desk"
+
     reservation = models.OneToOneField(
         Reservation,
         on_delete=models.CASCADE,
@@ -35,3 +41,4 @@ class Desk(models.Model):
     name = models.CharField(max_length=20)
     number = models.PositiveIntegerField()
     status = models.CharField(max_length=10, choices=ProductState.choices, default=ProductState.AVAILABLE)
+    type = models.CharField(max_length=10, choices=DeskTypes.choices)

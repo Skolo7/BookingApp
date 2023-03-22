@@ -9,26 +9,11 @@
         {# przyciski dynamiczne: zaciaga z bazy status?  #}
         {% for desk in all_desks %}
             {% if desk.id in reservation %}
-            <button class="occupied {{ desk.type }} button1" data-toggle="modal" data-target="#myModal"
-                    data-value="biurko_1">Przycisk 1
-            </button>
+                <button class="occupied {{ desk.type }} button1" data-toggle="modal" data-target="#myModal" data-value="biurko_1">Przycisk 1</button>
             {% elseif %}
-            <button class="free {{ desk.type }} button1" data-toggle="modal" data-target="#myModal"
-                    data-value="biurko_1">Przycisk 1
-            </button>
+                <button class="free {{ desk.type }} button1" data-toggle="modal" data-target="#myModal" data-value="biurko_1">Przycisk 1</button>
         {% endfor %}
-        <button class="button2 buttontype1" data-toggle="modal" data-target="#myModal" data-value="biurko_2">Przycisk
-            2
-        </button>
-        {{ form.date }}
-
-        <script>
-            $(function () {
-                $("#id_date").datepicker({
-                    format: 'dd/mm/yyyy',
-                });
-            });
-        </script>
+        <button class="button2 buttontype1" data-toggle="modal" data-target="#myModal" data-value="biurko_2">Przycisk 2</button>
         <button class="button3" data-toggle="modal" data-target="#myModal" data-value="biurko_3">Przycisk 3</button>
         <button class="button4" data-toggle="modal" data-target="#myModal" data-value="biurko_4">Przycisk 4</button>
         <button class="button5" data-toggle="modal" data-target="#myModal" data-value="biurko_5">Przycisk 5</button>

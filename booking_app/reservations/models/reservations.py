@@ -7,7 +7,6 @@ class Reservation(models.Model):
         DESK = "DESK", "DESK"
         ROOM = "ROOM", "ROOM"
         PARKING = "PARKING", "PARKING"
-
     start_date = models.DateField(help_text="date when reservations began")
     end_date = models.DateField()
     created_at = models.DateTimeField(auto_now=True)

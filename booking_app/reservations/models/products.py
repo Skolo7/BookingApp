@@ -40,5 +40,5 @@ class Desk(models.Model):
     )
     name = models.CharField(max_length=20)
     number = models.PositiveIntegerField()
-    status = models.CharField(max_length=10, choices=ProductState.choices, default=ProductState.AVAILABLE)
-    type = models.CharField(max_length=10, choices=DeskTypes.choices)
+    status = models.CharField(max_length=15, choices=ProductState.choices, default=ProductState.AVAILABLE)
+    type = models.CharField(max_length=15, choices=DeskTypes.choices)

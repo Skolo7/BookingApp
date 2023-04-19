@@ -43,6 +43,10 @@
 }
 
 
+.data-picker {
+    width: 50px;
+    height: 20px;
+}
 
 .button1 {
     top: 27px;

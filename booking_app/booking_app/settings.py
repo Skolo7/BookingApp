@@ -160,3 +160,6 @@ LOGGING = {
         'level': 'INFO',
     }
 }
+
+
+# SESSION_COOKIE_AGE = 300

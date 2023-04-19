@@ -207,7 +207,20 @@
                 dateFormat: 'yy-mm-dd',
                 minDate: 0
               })
+            const myButton = document.getElementById('button34')
 
+            window.addEventListener('scroll', () => {
+            const scrollPosition = window.scrollY;
+            const buttonRect = myButton.getBoundingClientRect();
+            const buttonWidth = buttonRect.width;
+            const buttonHeight = buttonRect.height;
+            const newWidth = buttonWidth - scrollPosition / 10;
+            const newHeight = buttonHeight - scrollPosition / 10;
+            console.log(newWidth);
+            console.log(newHeight);
+            myButton.style.width = `${newWidth}px`;
+            myButton.style.height = `${newHeight}px`;
+        });
         });
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>

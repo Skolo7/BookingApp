@@ -26,5 +26,6 @@ urlpatterns = [
     path('', views.index, name='index'),
     path('logout/', auth_views.LogoutView.as_view(template_name='users/logout.html'), name='logout'),
     path('', include('users.urls')),
-    path('reserve/', views.reserve, name='reserve')
+    path('reserve/', views.reserve, name='reserve'),
+    path('parking/', views.parking, name='parking')
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

@@ -1,5 +1,6 @@
 from django.shortcuts import render, redirect
 from django.contrib import messages
+from django.urls import reverse
 from django.contrib.auth import authenticate, login, logout
 from .forms import UserLoginForm, UserRegistrationForm
 from .models import Account
@@ -39,7 +40,6 @@ def login_view(request):
 
 
 def logout_view(request):
-    if request.method == 'POST':
+    if request.user.is_authenitcated:
         logout(request)
-
-        return redirect('login/')
+        return redirect('login')

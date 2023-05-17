@@ -6,5 +6,5 @@ from .forms import UserLoginForm
 urlpatterns = [
     path('register/', register_view, name='register'),
     path('login/', login_view, name='login'),
-    path('logout/', logout_view, name='logout')
+    path('logout_redirect_to_login/', logout_view, name='logout_redirect_to_login')
 ]

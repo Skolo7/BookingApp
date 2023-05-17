@@ -15,18 +15,22 @@ def index(request):
     return render(request, 'index.html')
 
 
-@login_required
+def get_available_desks(start_date, end_date):
+    available_desks = set(Desk.objects.all()) - {reserv.desk for reserv in
+                                                 Reservation.objects.filter(
+                                                     start_date__range=(start_date, end_date),
+                                                     end_date__range=(start_date, end_date)).select_related(
+                                                     'desk')}
+    return available_desks
+
+# @login_required
 def reserve(request):
     if request.method == 'POST':
         form = SingleReservationForm(request.POST)
         if form.is_valid():
             start_date = form.cleaned_data['start_date']
             end_date = form.cleaned_data['start_date'] # TODO ZAKRES DAT.
-            available_desks = set(Desk.objects.all()) - {reserv.desk for reserv in
-                                                         Reservation.objects.filter(
-                                                             start_date__range=(start_date, end_date),
-                                                             end_date__range=(start_date, end_date)).select_related(
-                                                             'desk')}
+            available_desks = get_available_desks(start_date=start_date, end_date=end_date)
             context = {'all_desks': available_desks}
             context['date_form'] = SingleReservationForm()
             # context['form'] = ReservationForm()
@@ -40,8 +44,7 @@ def reserve(request):
     today = timezone.now().date()
     available_desks = set(Desk.objects.all()) - {reserv.desk for reserv in
                                                  Reservation.objects.filter(
-                                                     start_date__range=(today, today),
-                                                     end_date__range=(today, today)).select_related(
+                                                     start_date__range=(today, today)).select_related(
                                                      'desk')}
     context = {'all_desks': available_desks, 'today': today}
     context['form'] = ReservationForm()
@@ -49,18 +52,32 @@ def reserve(request):
     return render(request, 'reserve.html', context=context)
 
 
-# Reservation.objects.filter(start_date__range=(start_date, end_date), end_date__range=(start_date, end_date)).select_related('desk')[0].desk
-# Reservation.objects.filter(start_date__range=(start_date, end_date), end_date__range=(start_date, end_date)).select_related('desk')[0].desk
-# {reserv.desk for reserv in Reservation.objects.filter(start_date__range=(start_date, end_date),
-#                                                       end_date__range=(start_date, end_date)).select_related(
-#     'desk')}
-# available_desks = set(Desk.objects.all()) - {reserv.desk for reserv in
-#                            Reservation.objects.filter(start_date__range=(start_date, end_date),
-#                                                       end_date__range=(start_date, end_date)).select_related(
-#                                'desk')}
-# reservation = Reservation.objects.filter(start_date__range=(start_date, end_date), end_date__range=(start_date, end_date))
-# print(reservation)
-# x = Reservation.objects.all()
-# desks = Desk.objects.all()
-
-# context = {'all_desks': available_desks}
+def parking(request):
+    if request.method == 'POST':
+        form = SingleReservationForm(request.POST)
+        if form.is_valid():
+            # start_date = form.cleaned_data['start_date']
+            # end_date = form.cleaned_data['start_date']
+            # available_desks = set(Desk.objects.all()) - {reserv.parking for reserv in
+            #                                              Reservation.objects.filter(
+            #                                                  start_date__range=(start_date, end_date),
+            #                                                  end_date__range=(start_date, end_date)).select_related(
+            #                                                  'desk')}
+            # context = {'all_desks': available_desks}
+            # context['date_form'] = SingleReservationForm()
+            # # context['form'] = ReservationForm()
+            return render(request, 'reserve.html')
+    else:
+        form = ReservationForm()
+    print("Parking View")
+    #
+    # today = timezone.now().date()
+    # available_desks = set(Desk.objects.all()) - {reserv.desk for reserv in
+    #                                              Reservation.objects.filter(
+    #                                                  start_date__range=(today, today),
+    #                                                  end_date__range=(today, today)).select_related(
+    #                                                  'desk')}
+    # context = {'all_desks': available_desks, 'today': today}
+    # context['form'] = ReservationForm()
+    # context['date_form'] = SingleReservationForm()
+    return render(request, 'parking.html')

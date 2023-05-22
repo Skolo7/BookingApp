@@ -297,6 +297,9 @@ left: 246px;
     left: 507px;
     width: 466px;
     height: 145px;
+    border: 1px solid #61ad4e;
+    background: rgba(0,0,255,0.3);
+    box-shadow: 0 6px 6px rgba(0, 0, 0, 0.6);
 
 }
 
@@ -305,6 +308,9 @@ left: 246px;
   left: 978px;
   width: 143px;
   height: 145px;
+    border: 1px solid #61ad4e;
+    background: rgba(126, 201, 107, 0.5);
+    box-shadow: 0 6px 6px rgba(0, 0, 0, 0.6);
 }
 
 .button33 {
@@ -312,6 +318,9 @@ left: 246px;
   left: 977px;
   width: 144px;
   height: 146px;
+    border: 1px solid #61ad4e;
+    background: rgba(255,255,204,1);
+    box-shadow: 0 6px 6px rgba(0, 0, 0, 0.6);
 }
 
 .button34 {
@@ -319,6 +328,9 @@ left: 246px;
   left: 827px;
   width: 145px;
   height: 145px;
+    border: 1px solid #61ad4e;
+    background: rgba(255,0,0,0.3);
+    box-shadow: 0 6px 6px rgba(0, 0, 0, 0.6);
 }
 
 .modal-content {

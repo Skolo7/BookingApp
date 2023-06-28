@@ -1,4 +1,4 @@
-"""booking_app URL Configuration
+"""core URL Configuration
 
 The `urlpatterns` list routes URLs to views. For more information please see:
     https://docs.djangoproject.com/en/4.1/topics/http/urls/
@@ -15,17 +15,16 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
-from . import views
+from .views import parking, reserve, index
 from django.conf import settings
 from django.conf.urls.static import static
 from django.contrib.auth import views as auth_views
 
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
-    path('', views.index, name='index'),
+    path('', index, name='index'),
     path('logout/', auth_views.LogoutView.as_view(template_name='users/logout.html'), name='logout'),
     path('', include('users.urls')),
-    path('reserve/', views.reserve, name='reserve'),
-    path('parking/', views.parking, name='parking')
+    path('reserve/', reserve, name='reserve'),
+    path('parking/', parking, name='parking')
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

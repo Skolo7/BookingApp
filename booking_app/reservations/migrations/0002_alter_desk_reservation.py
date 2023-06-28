@@ -3,7 +3,13 @@
 from django.db import migrations, models
 import django.db.models.deletion
 
+def add_desks(apps, schema_editor):
+    Desk = apps.get_model('reservations', 'Desk')
+    desks = [
 
+    ]
+
+    pass
 class Migration(migrations.Migration):
 
     dependencies = [
@@ -20,4 +26,5 @@ class Migration(migrations.Migration):
                 to="reservations.reservation",
             ),
         ),
+        migrations.RunPython(add_desks),
     ]

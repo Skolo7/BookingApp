@@ -42,11 +42,13 @@
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h4 class="modal-title">Dodaj nowy element</h4>
+                    <h4 class="modal-title">Zarezerwuj to biurko: </h4>
                     <button type="button" class="close" data-dismiss="modal">&times;</button>
                 </div>
                 <div class="modal-body">
-                    <form method="post"> {% csrf_token %}
+
+                    <form method="post" id="reserve"> {% csrf_token %}
+                        <input type="hidden" name="form_type" value="reserve">
                         {{ form }}
                         <div class="modal-footer">
                             <button type="submit" class="btn btn-primary">Zapisz</button>

@@ -22,24 +22,25 @@
     box-shadow: 0 6px 6px rgba(0, 0, 0, 0.6);
 }
 
-.occupied{
+.occupied {
     visibility: hidden;
 
 }
 
-.small_desk
-{
+.small_desk {
+    width: 54px;
+    height: 48px;
+}
+
+.large_desk {
     width: 57px;
     height: 57px;
 }
 
-.large_desk
-{
 
-}
-.narrow_desk
-{
-
+.side_desk {
+    width: 48px;
+    height: 53px;
 }
 
 
@@ -56,206 +57,146 @@
 .button2 {
     top: 85px;
     left: 65px;
-    /*width: 57px;*/
-    /*height: 57px;*/
 }
 
 .button3 {
     top: 27px;
     left: 123px;
-    width: 57px;
-    height: 57px;
 }
 
 .button4 {
     top: 85px;
     left: 123px;
-    width: 57px;
-    height: 57px;
 }
 
 .button5 {
     top: 217px;
     left: 89px;
-    width: 54px;
-    height: 46px;
 }
 
 .button6 {
     top: 264px;
     left: 66px;
-    width: 48px;
-    height: 53px;
 }
 
 .button7 {
     top: 318px;
     left: 66px;
-    width: 48px;
-    height: 53px;
 }
 
 .button8 {
     top: 372px;
     left: 66px;
-    width: 48px;
-    height: 53px;
 }
 
 .button9 {
     top: 264px;
     left: 115px;
-    width: 48px;
-    height: 53px;
 }
 
 .button10 {
     top: 318px;
     left: 115px;
-    width: 48px;
-    height: 53px;
 }
 
 .button11 {
     top: 372px;
     left: 115px;
-    width: 48px;
-    height: 53px;
 }
 
 .button12 {
     top: 12px;
     left: 241px;
-    width: 57px;
-    height: 57px;
 }
 
 .button13 {
     top: 70px;
     left: 241px;
-    width: 57px;
-    height: 57px;
 }
 
 .button14 {
     top: 209px;
     left: 246px;
-    width: 53px;
-    height: 47px;
 }
 
 .button15 {
     top: 257px;
-left: 246px;
-    width: 53px;
-    height: 47px;
+    left: 246px;
 }
 
 .button16 {
     top: 311px;
     left: 246px;
-    width: 53px;
-    height: 47px;
 }
 
 .button17 {
     top: 359px;
     left: 246px;
-    width: 53px;
-    height: 47px;
 }
 
 .button18 {
     top: 4px;
     left: 311px;
-    width: 58px;
-    height: 57px;
 }
 
 .button19 {
     top: 62px;
     left: 311px;
-    width: 58px;
-    height: 57px;
 }
 
 .button20 {
     top: 4px;
     left: 369px;
-    width: 58px;
-    height: 57px;
 }
 
 .button21 {
     top: 62px;
     left: 369px;
-    width: 58px;
-    height: 57px;
 }
 
 .button22 {
     top: 4px;
     left: 459px;
-    width: 57px;
-    height: 57px;
 }
 
 .button23 {
     top: 62px;
     left: 459px;
-    width: 57px;
-    height: 57px;
 }
 
 .button24 {
     top: 206px;
     left: 303px;
-    width: 53px;
-    height: 49px;
 }
 
 .button25 {
     top: 206px;
     left: 356px;
-    width: 53px;
-    height: 49px;
 }
 
 .button26 {
     top: 268px;
     left: 303px;
-    width: 49px;
-    height: 52px;
 }
 
 .button27 {
     top: 321px;
     left: 303px;
-    width: 49px;
-    height: 52px;
-
 }
 
 .button28 {
     top: 374px;
     left: 303px;
-    width: 49px;
-    height: 52px;
-
 }
 
 .button29 {
     top: 317px;
     left: 450px;
-    width: 53px;
-    height: 48px;
 }
 
 .button30 {
     top: 367px;
     left: 450px;
-    width: 53px;
-    height: 48px;
 }
 
 
@@ -298,38 +239,38 @@ left: 246px;
     width: 466px;
     height: 145px;
     border: 1px solid #61ad4e;
-    background: rgba(0,0,255,0.3);
+    background: rgba(0, 0, 255, 0.3);
     box-shadow: 0 6px 6px rgba(0, 0, 0, 0.6);
 
 }
 
 .button32 {
-  top: 281px;
-  left: 978px;
-  width: 143px;
-  height: 145px;
+    top: 281px;
+    left: 978px;
+    width: 143px;
+    height: 145px;
     border: 1px solid #61ad4e;
     background: rgba(126, 201, 107, 0.5);
     box-shadow: 0 6px 6px rgba(0, 0, 0, 0.6);
 }
 
 .button33 {
-  top: 3px;
-  left: 977px;
-  width: 144px;
-  height: 146px;
+    top: 3px;
+    left: 977px;
+    width: 144px;
+    height: 146px;
     border: 1px solid #61ad4e;
-    background: rgba(255,255,204,1);
+    background: rgba(255, 255, 204, 1);
     box-shadow: 0 6px 6px rgba(0, 0, 0, 0.6);
 }
 
 .button34 {
-  top: 4px;
-  left: 827px;
-  width: 145px;
-  height: 145px;
+    top: 4px;
+    left: 827px;
+    width: 145px;
+    height: 145px;
     border: 1px solid #61ad4e;
-    background: rgba(255,0,0,0.3);
+    background: rgba(255, 0, 0, 0.3);
     box-shadow: 0 6px 6px rgba(0, 0, 0, 0.6);
 }
 

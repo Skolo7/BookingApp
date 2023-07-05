@@ -1,5 +1,6 @@
 from django.db import models
-# from booking_app.reservations.models.states import STATUS_TYPES
+# from core.reservations.models.states import STATUS_TYPES
+
 
 class Notification(models.Model):
     reservation_id = models.IntegerField

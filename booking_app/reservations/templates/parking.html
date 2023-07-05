@@ -1,0 +1,97 @@
+{% extends "index.html" %}
+{% load static %}
+
+{% block content %}
+
+    <nav class="navbar navbar-main navbar-expand-lg mx-5 px-0 shadow-none rounded" id="navbarBlur" navbar-scroll="true">
+        <div class="container-fluid py-1 px-2">
+            <nav aria-label="breadcrumb">
+                <form method="post">
+                    {% csrf_token %}
+                    {{ date_form.as_p }}
+                    <button type="submit">Submit</button>
+                </form>
+                <h6 class="font-weight-bold mb-0">Dashboard</h6>
+            </nav>
+            <div class="collapse navbar-collapse mt-sm-0 mt-2 me-md-0 me-sm-4" id="navbar">
+            </div>
+        </div>
+    </nav>
+
+    <div class="container">
+        <img src="{% static 'assets/img/parking.jpg' %}" alt="office Image" class="office-image">
+
+{#        {% for desk in all_desks %}#}
+{#            <button class="free {{ desk.type }} button{{ desk.number }}" data-toggle="modal" data-target="#myModal"#}
+{#                    data-value="{{ desk.name }}_{{ desk.number }}">{{ desk.name }} {{ desk.number }}#}
+{#            </button>#}
+{#        {% endfor %}#}
+{#        <button class="button31" data-toggle="modal" data-target="#myModal" data-value="blue_conference_room">Blue#}
+{#            Conference Room#}
+{#        </button>#}
+{#        <button class="button32" data-toggle="modal" data-target="#myModal" data-value="green_conference_room">Green#}
+{#        </button>#}
+{#        <button class="button33" data-toggle="modal" data-target="#myModal" data-value="yellow_conference_room">Yellow#}
+{#        </button>#}
+{#        <button class="button34" data-toggle="modal" data-target="#myModal" data-value="red_conference_room">Red#}
+{#        </button>#}
+    </div>
+
+    <div class=" modal fade
+        " id="myModal">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">Dodaj nowy element</h4>
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                </div>
+                <div class="modal-body">
+                    <form method="post"> {% csrf_token %}
+                        {{ form }}
+                        <div class="modal-footer">
+                            <button type="submit" class="btn btn-primary">Zapisz</button>
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Anuluj</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+        $(document).ready(function () {
+            $("#myModal").on("show.bs.modal", function (e) {
+                $(".modal-dialog").css("max-width", "60%");
+            });
+            $(".button1").click(function () {
+                var value = $(this).data("value");
+                $("#inputValue").val(value);
+            });
+            $("#myModal").on("hidden.bs.modal", function (e) {
+                $("#inputValue").val("");
+            });
+            $('.datepicker').datepicker({
+                dateFormat: 'yy-mm-dd',
+                minDate: 0
+            })
+            const myButton = document.getElementById('button34')
+
+            window.addEventListener('scroll', () => {
+                const scrollPosition = window.scrollY;
+                const buttonRect = myButton.getBoundingClientRect();
+                const buttonWidth = buttonRect.width;
+                const buttonHeight = buttonRect.height;
+                const newWidth = buttonWidth - scrollPosition / 10;
+                const newHeight = buttonHeight - scrollPosition / 10;
+                console.log(newWidth);
+                console.log(newHeight);
+                myButton.style.width = `${newWidth}px`;
+                myButton.style.height = `${newHeight}px`;
+            });
+        });
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
+    <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
+
+    </script>
+{% endblock %}

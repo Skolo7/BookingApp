@@ -1,0 +1,27 @@
+{% extends "index.html" %}
+{% load static %}
+
+{% block content %}
+<ul>
+    {% for reservation in reservations %}
+
+    <li>{{ reservation.name }}</li>
+    <li>{{ reservation.phone_number }}</li>
+    <li>{{ reservation.email }}</li>
+    <li>{{ reservation.date }}</li>
+    <li>{{ reservation.time }}</li>
+    <li>{{ reservation.number_of_party }}</li>
+
+    <hr/>
+    <!-- If object_list is empty  -->
+    {% empty %}
+    <li>No Reservation have been made</li>
+    {% endfor %}
+</ul>
+    <script>
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+        <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
+        <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
+    </script>
+{% endblock %}

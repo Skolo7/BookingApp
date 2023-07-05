@@ -2,8 +2,10 @@ from django import forms
 from django.core.exceptions import ValidationError
 from ..models import Reservation
 
+
 class DateInput(forms.DateInput):
     input_type = 'date'
+
 
 class ReservationForm(forms.ModelForm):
     class Meta:
@@ -21,6 +23,7 @@ class ReservationForm(forms.ModelForm):
         if start_date and end_date and start_date > end_date:
             raise ValidationError('Start date cannot be after end date.')
         return cleaned_date
+
 
 class SingleReservationForm(forms.ModelForm):
     class Meta:

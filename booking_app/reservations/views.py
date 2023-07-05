@@ -34,33 +34,24 @@ def get_available_desks(start_date, end_date):
 @login_required
 def reserve(request):
     if request.method == 'POST':
-        if request.POST['form_type'] == 'reserve':
+        if request.POST['form_type'] == 'scope': # TODO change dostosowanie.
             form = ReservationForm()
             if form.is_valid():
                 start_date = form.cleaned_data['start_date']
                 end_date = form.cleaned_data['end_date']
-                available_desks = get_available_desks(start_date=start_date, end_date=start_date)
+                available_desks = get_available_desks(start_date=start_date, end_date=end_date)
 
-            context = {'all_desks': available_desks}
-        else:
-            form = SingleReservationForm(request.POST)
+                context = {'all_desks': available_desks}
+                return render(request, 'reserve.html', context=context)
+        elif request.POST['form_type'] == 'reserve':
+            form = ReservationForm(request.POST)
             if form.is_valid():
-                # TODO ZAKRES DAT.
-
-
-
                 start_date = form.cleaned_data['start_date']
                 end_date = form.cleaned_data['start_date']
                 available_desks = get_available_desks(start_date=start_date, end_date=end_date)
-
-
-
-
-
-
+                form.save()
                 context = {'all_desks': available_desks}
-                context['date_form'] = SingleReservationForm()
-                # context['form'] = ReservationForm()
+                context['date_form'] = ReservationForm()
             return render(request, 'reserve.html', context=context)
     else:
         form = ReservationForm()
@@ -76,6 +67,9 @@ def reserve(request):
     context = {'all_desks': available_desks, 'today': today, 'form': form}
     context['date_form'] = SingleReservationForm()
     return render(request, 'reserve.html', context=context)
+
+
+
 
 @login_required
 def parking(request):
@@ -96,7 +90,6 @@ def parking(request):
     else:
         form = ReservationForm()
     print("Parking View")
-    #
     # today = timezone.now().date()
     # available_desks = set(Desk.objects.all()) - {reserv.desk for reserv in
     #                                              Reservation.objects.filter(

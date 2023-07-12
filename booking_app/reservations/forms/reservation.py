@@ -33,7 +33,3 @@ class SingleReservationForm(forms.ModelForm):
             'start_date': DateInput,
         }
 
-    # def clean(self):
-    #     cleaned_date = super().clean()
-    #     start_date = cleaned_date.get('start_date')
-    #     return cleaned_date

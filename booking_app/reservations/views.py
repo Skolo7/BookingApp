@@ -34,8 +34,9 @@ def get_available_desks(start_date, end_date):
 @login_required
 def reserve(request):
     if request.method == 'POST':
-        if request.POST['form_type'] == 'scope': # TODO change dostosowanie.
-            form = ReservationForm()
+
+        if request.POST['form_type'] == 'scope': # TODO nazwa do zmiany.
+            form = ReservationForm(request.POST)
             if form.is_valid():
                 start_date = form.cleaned_data['start_date']
                 end_date = form.cleaned_data['end_date']
@@ -44,6 +45,7 @@ def reserve(request):
                 context = {'all_desks': available_desks}
                 return render(request, 'reserve.html', context=context)
         elif request.POST['form_type'] == 'reserve':
+            # TODO Kurwa wszystko do wyjebania jest chyba
             form = ReservationForm(request.POST)
             if form.is_valid():
                 start_date = form.cleaned_data['start_date']
@@ -56,8 +58,6 @@ def reserve(request):
     else:
         form = ReservationForm()
 
-    # start_date, end_date = timezone.now().date(), timezone.now().date()
-    # TODO refactor in the future.
     today = timezone.now().date()
     available_desks = set(Desk.objects.all()) - {reserv.desk for reserv in
                                                  Reservation.objects.filter(
@@ -70,7 +70,7 @@ def reserve(request):
 
 
 
-
+# TODO rezerwacje parkingu po naprawieniu kodu do zwyklych rezerwacji v
 @login_required
 def parking(request):
     if request.method == 'POST':

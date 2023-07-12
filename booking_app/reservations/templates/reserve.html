@@ -24,7 +24,7 @@
 
         {% for desk in all_desks %}
             <button class="free {{ desk.type }} button{{ desk.number }}" data-toggle="modal" data-target="#myModal"
-                    data-value="{{ desk.name }}_{{ desk.number }}">{{ desk.name }} {{ desk.number }}
+                    data-value="{{ desk.name }}_{{ desk.number }}_{{ desk.type }}">{{ desk.name }} {{ desk.number }}
             </button>
         {% endfor %}
         <button class="button31" data-toggle="modal" data-target="#myModal" data-value="blue_conference_room">Blue
@@ -48,8 +48,11 @@
                 </div>
                 <div class="modal-body">
 
-                    <form method="post" id="reserve"> {% csrf_token %}
+                    <form method="post" id="reserve">
+                        {% csrf_token %}
                         <input type="hidden" name="form_type" value="reserve">
+                        <input type="hidden" name="desk_number" id="deskNumber">
+                        <input type="hidden" name="desk_type" id="deskType">
                         {{ form }}
                         <div class="modal-footer">
                             <button type="submit" class="btn btn-primary">Zapisz</button>
@@ -60,22 +63,41 @@
             </div>
         </div>
     </div>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
+    <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
     <script>
         $(document).ready(function () {
+
+            $('.free').click(function () {
+                var deskNumber = $(this).data('value').split('_')[1];
+                $('#deskNumber').val(deskNumber);
+            })
+
+            $('.free').click(function () {
+                var deskType = $(this).data('value').split('_')[2];
+                $('#deskType').val(deskType);
+            })
+
             $("#myModal").on("show.bs.modal", function (e) {
                 $(".modal-dialog").css("max-width", "60%");
             });
+
             $(".button1").click(function () {
                 var value = $(this).data("value");
                 $("#inputValue").val(value);
             });
+
             $("#myModal").on("hidden.bs.modal", function (e) {
                 $("#inputValue").val("");
             });
+
             $('.datepicker').datepicker({
                 dateFormat: 'yy-mm-dd',
                 minDate: 0
             })
+
             const myButton = document.getElementById('button34')
 
             window.addEventListener('scroll', () => {
@@ -91,10 +113,6 @@
                 myButton.style.height = `${newHeight}px`;
             });
         });
-        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
-    <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
 
     </script>
 {% endblock %}

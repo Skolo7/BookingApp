@@ -39,12 +39,10 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'django_extensions'
-
 ]
 
 INSTALLED_EXTENSIONS = [
     'reservations',
-    'core',
     'notification',
     'users',
     'bootstrap4',
@@ -67,7 +65,7 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
-ROOT_URLCONF = 'reservations.urls'
+ROOT_URLCONF = 'core.urls'
 
 TEMPLATES = [
     {

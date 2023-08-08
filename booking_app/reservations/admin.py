@@ -9,11 +9,15 @@ class AdminReservation(admin.ModelAdmin):
 
 @admin.register(Desk)
 class AdminDesk(admin.ModelAdmin):
-    list_display = ('number', )
+    list_display = ('id', 'number', 'status', 'type')
+    list_filter = ('status', 'type')
+    ordering = ('id', 'number', )
+
 
 @admin.register(Parking)
 class AdminParking(admin.ModelAdmin):
     list_display = ('number', )
+
 
 @admin.register(Room)
 class AdminRoom(admin.ModelAdmin):

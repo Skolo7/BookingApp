@@ -1,6 +1,6 @@
 from django.shortcuts import redirect
 from django.shortcuts import render
-from reservations.forms import ReservationForm, DateForm, SingleReservationForm
+from reservations.forms import ReservationForm, DateForm, SingleReservationForm, ReserveDeskForm
 from reservations.models import Desk, Reservation
 from django.utils import timezone
 from django.contrib.auth.decorators import login_required
@@ -43,17 +43,18 @@ def reserve(request):
                 context = {'all_desks': available_desks}
                 return render(request, 'reserve.html', context=context)
         elif request.POST['form_type'] == 'reserve':
-            form = ReservationForm(request.POST)
+            form = ReserveDeskForm(request.POST)
             if form.is_valid():
-                start_date = form.cleaned_data['start_date']
-                end_date = form.cleaned_data['start_date']
-                available_desks = get_available_desks(start_date=start_date, end_date=end_date)
+                # start_date = form.cleaned_data['start_date']
+                # end_date = form.cleaned_data['start_date']
+                # available_desks = get_available_desks(start_date=start_date, end_date=end_date)
                 form.save()
-                context = {'all_desks': available_desks}
+                # context = {'all_desks': available_desks}
                 context['date_form'] = ReservationForm()
             return render(request, 'reserve.html', context=context)
     else:
         form = ReservationForm()
+        reserve_form = ReserveDeskForm()
 
     # start_date, end_date = timezone.now().date(), timezone.now().date()
     # TODO refactor in the future.
@@ -62,9 +63,11 @@ def reserve(request):
                                                  Reservation.objects.filter(
                                                      start_date__range=(today, today)).select_related(
                                                      'desk')}
-    form = ReservationForm()
+    # form = ReservationForm()
+    # reserve_form = ReserveDeskForm()
     context = {'all_desks': available_desks, 'today': today, 'form': form}
-    context['date_form'] = ReservationForm()
+    context['date_form'] = form
+    context['reserve_form'] = reserve_form
     return render(request, 'reserve.html', context=context)
 
 

@@ -15,7 +15,7 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
-from .views import parking, reserve, index
+from .views import parking, reserve, index, reserve_desk
 from django.conf import settings
 from django.conf.urls.static import static
 from django.contrib.auth import views as auth_views
@@ -26,5 +26,6 @@ urlpatterns = [
                   path('logout/', auth_views.LogoutView.as_view(template_name='users/logout.html'), name='logout'),
                   path('', include('users.urls')),
                   path('reserve/', reserve, name='reserve'),
-                  path('parking/', parking, name='parking')
+                  path('parking/', parking, name='parking'),
+                  path('desks/reserve', reserve_desk, name='reserve-desk')
               ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

@@ -28,7 +28,7 @@ class Migration(migrations.Migration):
                 ),
                 (
                     "start_date",
-                    models.DateField(help_text="date when reservations began"),
+                    models.DateField(),
                 ),
                 ("end_date", models.DateField()),
                 ("created_at", models.DateTimeField(auto_now=True)),

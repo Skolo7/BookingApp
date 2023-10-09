@@ -1,0 +1,25 @@
+{% extends "index.html" %}
+{% load static %}
+
+{% block content %}
+    <!DOCTYPE html>
+    <html>
+    <head>
+        <title>My Reservations</title>
+    </head>
+    <body>
+    <h1>Reservations: </h1>
+    <ul>
+        {% for reservation in reservations %}
+            <li>ID: {{ reservation.id }}</li>
+            <li>Data początkowa: {{ reservation.start_date }}</li>
+            <li>Data końcowa: {{ reservation.end_date }}</li>
+
+            {% empty %}
+            <li>No reservations</li>
+        {% endfor %}
+    </ul>
+    </body>
+    </html>
+
+{% endblock %}

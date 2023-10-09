@@ -15,7 +15,7 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
-from .views import parking, reserve, index, reserve_desk
+from .views import parking, reserve, index, reserve_desk, UserReservationListView
 from django.conf import settings
 from django.conf.urls.static import static
 from django.contrib.auth import views as auth_views
@@ -27,5 +27,6 @@ urlpatterns = [
                   path('', include('users.urls')),
                   path('reserve/', reserve, name='reserve'),
                   path('parking/', parking, name='parking'),
-                  path('desks/reserve', reserve_desk, name='reserve-desk')
+                  path('desks/reserve', reserve_desk, name='reserve-desk'),
+                  path('my_reservations/', UserReservationListView.as_view(), name='user_reservations')
               ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

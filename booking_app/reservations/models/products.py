@@ -4,11 +4,10 @@ from .states import ProductState
 
 class Parking(models.Model):
     number = models.IntegerField()
-    floor = models.IntegerField()
     status = models.CharField(max_length=10, choices=ProductState.choices, default=ProductState.AVAILABLE)
 
     def __str__(self):
-        return ""
+        return str(self.number)
     
 class Room(models.Model):
     name = models.CharField(max_length=20)

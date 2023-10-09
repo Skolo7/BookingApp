@@ -1,6 +1,8 @@
 {% extends "index.html" %}
 {% load static %}
-
+{% block head %}
+<link href="{% static 'assets/css/office.css' %}" rel="stylesheet">
+{% endblock %}
 {% block content %}
 
     <nav class="navbar navbar-main navbar-expand-lg mx-5 px-0 shadow-none rounded" id="navbarBlur" navbar-scroll="true">
@@ -12,7 +14,6 @@
                     {{ date_form.as_p }}
                     <button type="submit">Submit</button>
                 </form>
-                <h6 class="font-weight-bold mb-0">Dashboard</h6>
             </nav>
             <div class="collapse navbar-collapse mt-sm-0 mt-2 me-md-0 me-sm-4" id="navbar">
             </div>

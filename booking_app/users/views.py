@@ -7,7 +7,7 @@ from .models import Account
 import logging
 
 logger = logging.getLogger(__name__)
-
+# TODO REFACTOR. CLASS BASED VIEW.
 
 def register_view(request):
     if request.method == 'POST':

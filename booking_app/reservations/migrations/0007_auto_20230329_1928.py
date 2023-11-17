@@ -3,16 +3,6 @@
 from django.db import migrations
 
 
-def create_desks(apps, schema_editor):
-    Desk = apps.get_model('reservations', 'Desk')
-    for num in range(1, 31):
-        Desk.objects.create(
-            name="Desk",
-            type="small_desk",
-            number=num,
-        )
-
-
 
 class Migration(migrations.Migration):
 
@@ -21,5 +11,4 @@ class Migration(migrations.Migration):
     ]
 
     operations = [
-        migrations.RunPython(create_desks),
     ]

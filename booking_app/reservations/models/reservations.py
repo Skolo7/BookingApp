@@ -45,5 +45,5 @@ class Reservation(models.Model):
                                on_delete=models.CASCADE, blank=True, null=True, related_name='reservations')
     type = models.CharField(max_length=35, choices=ReservationTypes.choices)
 
-    def __str__(self):
+    def __str__(self) -> str:
         return str(self.title)

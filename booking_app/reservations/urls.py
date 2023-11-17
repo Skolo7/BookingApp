@@ -21,12 +21,10 @@ from django.conf.urls.static import static
 from django.contrib.auth import views as auth_views
 
 urlpatterns = [
-                  path('admin/', admin.site.urls),
-                  path('', index, name='index'),
-                  path('logout/', auth_views.LogoutView.as_view(template_name='users/logout.html'), name='logout'),
-                  path('', include('users.urls')),
-                  path('reserve/', reserve, name='reserve'),
-                  path('parking/', parking, name='parking'),
-                  path('desks/reserve', reserve_desk, name='reserve-desk'),
-                  path('my_reservations/', UserReservationListView.as_view(), name='user_reservations')
-              ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
+          path('admin/', admin.site.urls),
+          path('logout/', auth_views.LogoutView.as_view(template_name='users/logout.html'), name='logout'),
+          path('reserve/', reserve, name='reserve'),
+          path('parking/', parking, name='parking'),
+          path('desks/reserve', reserve_desk, name='reserve-desk'),
+          path('my_reservations/', UserReservationListView.as_view(), name='user_reservations')
+              ]

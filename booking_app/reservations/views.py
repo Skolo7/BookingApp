@@ -140,6 +140,47 @@ def render_with_form_and_default_parkings(request, form, default_parkings, today
     }
     return render(request, 'parking.html', context=context)
 
+#Room reservations
+# @login_required
+# def parking(request):
+#     today = timezone.now().date()
+#     form = ReservationForm(request.POST or None)
+#
+#     if form.is_valid():
+#         available_parkings = get_filtered_parkings(form)
+#         return render_with_parkings(request, available_parkings)
+#
+#     default_parkings = get_default_parkings(today)
+#     return render_with_form_and_default_parkings(request, form, default_parkings, today)
+#
+#
+# def get_filtered_parkings(form):
+#     start_date = form.cleaned_data['start_date']
+#     end_date = form.cleaned_data['end_date']
+#     return get_available_parkings(start_date=start_date, end_date=end_date)
+#
+#
+# def get_default_parkings(today):
+#     reservations_today = Reservation.objects.filter(start_date__range=(today, today)).select_related('parking')
+#     reserved_parkings_today = {reserv.parking for reserv in reservations_today}
+#     all_parkings = set(Parking.objects.all())
+#     return all_parkings - reserved_parkings_today
+#
+#
+# def render_with_parkings(request, available_parkings):
+#     context = {'all_parkings': available_parkings}
+#     return render(request, 'parking.html', context=context)
+#
+#
+# def render_with_form_and_default_parkings(request, form, default_parkings, today):
+#     context = {
+#         'all_parkings': default_parkings,
+#         'today': today,
+#         'form': form,
+#         'date_form': ReservationForm()
+#     }
+#     return render(request, 'parking.html', context=context)
+
 
 
 class UserReservationListView(ListView):
@@ -149,3 +190,6 @@ class UserReservationListView(ListView):
 
     def get_queryset(self):
         return Reservation.objects.filter(person=self.request.user)
+
+
+

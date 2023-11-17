@@ -47,6 +47,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'django_extensions',
     'bootstrap4',
+
 ]
 
 INSTALLED_EXTENSIONS = [
@@ -174,3 +175,15 @@ LOGGING = {
 
 
 # SESSION_COOKIE_AGE = 300
+
+# EMAIL_BACKEND = "django.core.mail.backend.smtp.EmailBackend"
+EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"
+# EMAIL_BACKEND = "django.core.mail.backends.filebased.EmailBackend"
+# EMAIL_FILE_PATH = BASE_DIR / "sent_emails"
+# EMAIL_HOST = "smtp.gmail.com"
+# EMAIL_USE_TLS = True
+# EMAIL_PORT = 587
+# EMAIL_HOST_USER = ''
+# EMAIL_HOST_USER = env('EMAIL_HOST_USER')
+# EMAIL_HOST_PASSWORD = ''
+# EMAIL_HOST_PASSWORD = env('EMAIL_HOST_PASSWORD')

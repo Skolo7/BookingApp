@@ -5,6 +5,6 @@ from ..models import Account
 
 
 class UserLoginForm(AuthenticationForm):
-    email = forms.EmailField()
+    username = forms.EmailField()
     password = forms.CharField(label="Password", widget=forms.PasswordInput)
 

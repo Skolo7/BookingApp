@@ -3,6 +3,8 @@ from django.urls import path, include
 from django.conf import settings
 from django.conf.urls.static import static
 from reservations.views import index
+from django.contrib.auth import views
+from django.contrib.auth import urls
 
 urlpatterns = [
                   path('', include('reservations.urls')),
@@ -34,4 +36,3 @@ urlpatterns = [
                       name="password_reset_complete",
                   ),
               ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
-

@@ -1,6 +1,5 @@
 import logging
 
-
 from django.shortcuts import redirect
 from django.shortcuts import render
 from django.utils import timezone
@@ -13,8 +12,8 @@ from django.views.generic import ListView
 from django.db.models import Q
 from django.contrib import messages
 
-
 logger = logging.getLogger(__name__)
+
 
 def reservations(request):
     reservations = Account.objects.all()
@@ -34,13 +33,14 @@ def get_available_desks(start_date, end_date):
                                                      'desk')}
     return available_desks
 
+
 def get_available_parkings(start_date, end_date):
     raise Exception
     available_desks = set(Parking.objects.all()) - {reserv.desk for reserv in
-                                                 Reservation.objects.filter(
-                                                     start_date__range=(start_date, end_date),
-                                                     end_date__range=(start_date, end_date)).select_related(
-                                                     'desk')}
+                                                    Reservation.objects.filter(
+                                                        start_date__range=(start_date, end_date),
+                                                        end_date__range=(start_date, end_date)).select_related(
+                                                        'desk')}
     return available_desks
 
 
@@ -57,6 +57,7 @@ def reserve_desk(request):
                                    type=Reservation.ReservationTypes.DESK, person=request.user)
 
     return redirect(to='reserve')
+
 
 @login_required
 def reserve(request):
@@ -97,6 +98,7 @@ def render_with_form_and_default_desks(request, form, default_desks, today):
         'date_form': ReservationForm()
     }
     return render(request, 'reserve.html', context=context)
+
 
 # parking
 
@@ -140,7 +142,8 @@ def render_with_form_and_default_parkings(request, form, default_parkings, today
     }
     return render(request, 'parking.html', context=context)
 
-#Room reservations
+
+# Room reservations
 # @login_required
 # def parking(request):
 #     today = timezone.now().date()
@@ -182,7 +185,6 @@ def render_with_form_and_default_parkings(request, form, default_parkings, today
 #     return render(request, 'parking.html', context=context)
 
 
-
 class UserReservationListView(ListView):
     model = Reservation
     template_name = 'user_reservations.html'
@@ -190,6 +192,3 @@ class UserReservationListView(ListView):
 
     def get_queryset(self):
         return Reservation.objects.filter(person=self.request.user)
-
-
-

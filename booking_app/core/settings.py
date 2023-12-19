@@ -13,6 +13,7 @@ https://docs.djangoproject.com/en/4.1/ref/settings/
 from pathlib import Path
 import environ
 import os
+from django.urls import reverse_lazy
 
 from .env import env
 
@@ -47,7 +48,6 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'django_extensions',
     'bootstrap4',
-
 ]
 
 INSTALLED_EXTENSIONS = [
@@ -147,7 +147,7 @@ STATICFILES_DIRS = (
     os.path.join(BASE_DIR, 'static'),
 )
 LOGIN_REDIRECT_URL = '/'
-LOGIN_URL = 'users/login/'
+LOGIN_URL = reverse_lazy('login')
 # LOGOUT_REDIRECT_URL = 'login/'
 
 

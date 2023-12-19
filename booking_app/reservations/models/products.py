@@ -6,6 +6,7 @@ class Parking(models.Model):
     number = models.IntegerField()
     status = models.CharField(max_length=10, choices=ProductState.choices, default=ProductState.AVAILABLE)
 
+
     def __str__(self):
         return str(self.number)
     

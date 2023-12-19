@@ -2,11 +2,13 @@ from django.conf import settings
 from django.db import models
 from .products import Desk, Room, Parking
 
+
 class Reservation(models.Model):
     class ReservationTypes(models.TextChoices):
         DESK = "DESK", "DESK"
         ROOM = "ROOM", "ROOM"
         PARKING = "PARKING", "PARKING"
+
     start_date = models.DateField(help_text="date when reservations began")
     end_date = models.DateField()
     created_at = models.DateTimeField(auto_now=True)

@@ -1,18 +1,20 @@
 from django.test import TestCase
 from django.urls import reverse
 from datetime import date, timedelta
-from reservations.models import Desk, Reservation
+from django.utils import timezone
 from pprint import pprint as pp
 
-class TestReserveView(TestCase):
+class TestReserveDeskView(TestCase):
     def setUp(self) -> None:
-        pass
-        # TODO Utworzenie usera i zalgoowanie się self.clientem przed wykonaniem get.
+        self.user = Account.objects.create_user(username='test@user.com', password='Qwerty123!')
+        create_desks()
+        # create_parking_spots()
+        # create_rooms()
 
-    # def test_get_reserve_today_desks_unauthorized_user(self):
-    #     response = self.client.get(reverse('reserve'))
-    #     self.assertEqual(response.status_code, 403)
-    #     print(response)
+    def test_get_reserve_today_desks_unauthorized_user(self):
+        response = self.client.get(reverse('reserve'), follow=True)
+        self.assertEqual(response.status_code, HTTPStatus.OK)
+        self.assertTemplateUsed(response, 'users/login.html')
 
     def test_get_reserve_today_desks(self):
         response = self.client.get(reverse('reserve'))
@@ -37,3 +39,5 @@ class TestReserveView(TestCase):
         self.assertEqual(number_of_desks, 28)
         self.assertNotIn(desk1, all_desks)
         self.assertNotIn(desk2, all_desks)
+
+    def test_get_available_desks

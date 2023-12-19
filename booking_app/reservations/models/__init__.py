@@ -1,2 +1,2 @@
 from .reservations import Reservation
-from .products import *
+from .products import Room, Desk, Parking

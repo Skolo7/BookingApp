@@ -1,7 +1,7 @@
 from http import HTTPStatus
 
 
-from django.test import TestCase
+from django.test import TestCase, tag
 from django.urls import reverse
 from datetime import date, timedelta
 from django.utils import timezone
@@ -9,6 +9,7 @@ from pprint import pprint as pp
 from .models import Desk, Reservation
 from users.models import Account
 from resources.scripts.products import create_desks, create_parking_spots, create_rooms
+from .views import ReserveDeskView
 
 class TestReserveDeskView(TestCase):
     def setUp(self) -> None:
@@ -17,7 +18,7 @@ class TestReserveDeskView(TestCase):
         # create_parking_spots()
         # create_rooms()
 
-    def test_get_reserve_today_desks_unauthorized_user(self):
+    def test_get_reserve_today_desks_unauthorized_user_redirect_to_login_page(self):
         response = self.client.get(reverse('reserve'), follow=True)
         self.assertEqual(response.status_code, HTTPStatus.OK)
         self.assertTemplateUsed(response, 'users/login.html')

@@ -30,9 +30,10 @@ class ReserveDeskView(LoginRequiredMixin, View):
     def get_filtered_desks(self, form):
         start_date = form.cleaned_data['start_date']
         end_date = form.cleaned_data['end_date']
-        return get_available_desks(start_date=start_date, end_date=end_date)
+        return self.get_available_desks(start_date=start_date, end_date=end_date)
 
-    def get_default_desks(self, today):
+    @staticmethod
+    def get_default_desks(today):
         reservations_today = Reservation.objects.filter(start_date__range=(today, today)).select_related('desk')
         reserved_desks_today = {reserv.desk for reserv in reservations_today}
         all_desks = set(Desk.objects.all())

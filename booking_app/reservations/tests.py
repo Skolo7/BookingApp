@@ -30,6 +30,7 @@ class TestReserveDeskView(TestCase):
         number_of_desks = len(response.context['all_desks'])
         self.assertEqual(number_of_desks, 30)
 
+
     def test_get_reserve_today_returns_only_desks_which_are_not_reserved(self):
         self.client.force_login(self.user)
         today = timezone.now().date()
@@ -47,4 +48,35 @@ class TestReserveDeskView(TestCase):
         self.assertNotIn(desk1, all_desks)
         self.assertNotIn(desk2, all_desks)
 
-    def test_get_available_desks
+    def test_rendering_of_page(self):
+        self.client.force_login(self.user)
+        response = self.client.get(reverse('reserve'))
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response, 'reserve.html')
+
+    @tag('x')
+    def test_form_submission(self):
+        self.client.force_login(self.user)
+        data = {'start_date': '2023-01-01', 'end_date': '2023-01-10'}
+        response = self.client.post(reverse('reserve'), data)
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response, 'reserve.html')
+        self.assertEqual(Reservation.objects.count(), 1)
+
+
+    def test_get_default_desks(self):
+        self.client.force_login(self.user)
+        today = timezone.now().date()
+        default_desks = ReserveDeskView.get_default_desks(today)
+        self.assertEqual(len(default_desks), 30)
+        self.assertIn(Desk.objects.first(), default_desks)
+        self.assertIn(Desk.objects.last(), default_desks)
+
+    # def test_default_date_in_form(self):
+    #     response = self.client.get(reverse('reserve'), data)
+    #     default_date = response.context['today']
+    #
+    #     self.assertEqual(default_date, date_form.fields['start_date'].initial)
+    #     self.assertEqual(default_date, date_form.fields['end_date'].initial)
+
+

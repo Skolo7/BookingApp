@@ -48,6 +48,9 @@
                     <button type="button" class="close" data-dismiss="modal">&times;</button>
                 </div>
                 <div class="modal-body">
+
+
+
                     <form method="post" id="reserve" action="{% url 'reserve' %}">
                         {% csrf_token %}
                         <input type="hidden" name="desk_number" id="deskNumber">

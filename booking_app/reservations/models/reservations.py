@@ -44,7 +44,7 @@ class Reservation(models.Model):
         max_length=255,
     )
     person = models.ForeignKey(settings.AUTH_USER_MODEL,
-                               on_delete=models.CASCADE, blank=True, null=True, related_name='reservations')
+                               on_delete=models.CASCADE, related_name='reservations')
     type = models.CharField(max_length=35, choices=ReservationTypes.choices)
 
     def __str__(self) -> str:

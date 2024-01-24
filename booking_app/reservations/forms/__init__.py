@@ -1,2 +1,2 @@
-from .reservation import ReservationForm, SingleReservationForm, ReserveDeskForm
+from .reservation import FilterAvailabilityForm, SingleReservationForm, ReserveDeskForm
 from .date_form import DateForm

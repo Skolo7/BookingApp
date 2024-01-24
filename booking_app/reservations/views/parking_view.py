@@ -6,7 +6,7 @@ from django.contrib import messages
 from django.db.models import Q
 from ..models.products import Desk, Room, Parking
 from ..models.reservations import Reservation
-from ..forms import ReservationForm, ReserveDeskForm
+from ..forms import ReserveDeskForm
 from users.models import Account
 from django.contrib.auth.mixins import LoginRequiredMixin
 

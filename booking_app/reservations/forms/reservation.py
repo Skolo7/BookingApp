@@ -24,14 +24,9 @@ class ReserveDeskForm(forms.ModelForm):
         return cleaned_date
 
 
-class ReservationForm(forms.ModelForm):
-    class Meta:
-        model = Reservation
-        fields = ['start_date', 'end_date']
-        widgets = {
-            'start_date': DateInput,
-            'end_date': DateInput
-        }
+class FilterAvailabilityForm(forms.Form): # FilterDesksForm
+    start_date = forms.DateField(widget=forms.widgets.DateInput(attrs={'type': 'date'}))
+    end_date = forms.DateField(widget=forms.widgets.DateInput(attrs={'type': 'date'}))
 
     def clean(self):
         cleaned_date = super().clean()

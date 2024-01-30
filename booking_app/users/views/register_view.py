@@ -2,7 +2,7 @@ from django.shortcuts import render, redirect
 from django.contrib import messages
 from django.urls import reverse
 from django.contrib.auth import authenticate, login, logout
-from ..forms import UserLoginForm, UserRegistrationForm
+from ..forms import UserRegistrationForm
 from ..models import Account
 from django.views import View
 from django.contrib.auth.forms import UserCreationForm
@@ -13,7 +13,7 @@ logger = logging.getLogger(__name__)
 
 class RegisterView(View):
     template_name = 'users/register.html'
-    form_class = UserCreationForm
+    form_class = UserRegistrationForm
 
     def get(self, request, *args, **kwargs):
         form = self.form_class()

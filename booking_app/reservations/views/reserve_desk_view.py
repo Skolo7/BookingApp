@@ -1,14 +1,10 @@
 from django.shortcuts import render, redirect
 from django.utils import timezone
 from django.views import View
-from django.contrib import messages
-from django.db.models import Q
-from ..models.products import Desk, Room, Parking
+from ..models.products import Desk
 from ..models.reservations import Reservation
 from ..forms import FilterAvailabilityForm, ReserveDeskForm
-from users.models import Account
 from django.contrib.auth.mixins import LoginRequiredMixin
-from icecream import ic
 
 class ReserveDeskView(LoginRequiredMixin, View):
     template_name = 'reserve.html'
@@ -41,10 +37,6 @@ class ReserveDeskView(LoginRequiredMixin, View):
         reserved_desks_today = {reserv.desk for reserv in reservations_today}
         all_desks = set(Desk.objects.all())
         return all_desks - reserved_desks_today
-
-    # def render_with_desks(self, request, available_desks):
-    #     context = {'all_desks': available_desks}
-    #     return render(request, self.template_name, context=context)
 
     def render_with_form_and_default_desks(self, request, form, default_desks, today, reservation_form):
         context = {

@@ -22,11 +22,8 @@ class RegisterView(View):
     def post(self, request, *args, **kwargs):
         form = self.form_class(request.POST)
         if form.is_valid():
-            email = form.cleaned_data.get('username')
-            password = form.cleaned_data.get('password1')
-            user = Account.objects.create_user(username=email, password=password)
-            user.save()
-            messages.success(request, 'Account was created for {}'.format(email))
+            form.save()
+            messages.success(request, 'Account was created for {}'.format(form.cleaned_data['email']))
             return redirect('login')
 
         return render(request, self.template_name, {'form': form})

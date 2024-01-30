@@ -6,6 +6,7 @@ from ..models import Reservation
 class DateInput(forms.DateInput):
     input_type = 'date'
 
+
 class ReserveDeskForm(forms.ModelForm):
     class Meta:
         model = Reservation

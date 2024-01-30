@@ -7,10 +7,10 @@
     <nav class="navbar navbar-main navbar-expand-lg mx-5 px-0 shadow-none rounded" id="navbarBlur" navbar-scroll="true">
         <div class="container-fluid py-1 px-2">
             <nav aria-label="breadcrumb">
-                  <form method="post" id="scope"> {% csrf_token %}
+                  <form method="post" id="scope" action="{%  url 'filter-desk-view' %}"> {% csrf_token %}
                       <input type="hidden" name="form_type" value="scope">
                     {% csrf_token %}
-                    {{ date_form.as_p }}
+                    {{ filter_form.as_p }}
                     <button type="submit">Submit</button>
                 </form>
             </nav>

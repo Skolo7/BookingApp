@@ -1,7 +1,12 @@
+from datetime import date
+
 from django import forms
 from django.forms.widgets import DateInput
-from datetime import date
 
 
 class DateForm(forms.Form):
-    my_date = forms.DateField(widget=DateInput(attrs={'type': 'date', 'min': date.today().strftime('%Y-%m-%d')}))
+    my_date = forms.DateField(
+        widget=DateInput(
+            attrs={'type': 'date', 'min': date.today().strftime('%Y-%m-%d')}
+        )
+    )

@@ -1,15 +1,17 @@
-from django.shortcuts import render, redirect
-from django.contrib import messages
-from django.urls import reverse
-from django.contrib.auth import authenticate, login, logout
-from ..forms import UserRegistrationForm
-from ..models import Account
-from django.views import View
-from django.contrib.auth.forms import UserCreationForm
-
 import logging
 
+from django.contrib import messages
+from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth.forms import UserCreationForm
+from django.shortcuts import redirect, render
+from django.urls import reverse
+from django.views import View
+
+from ..forms import UserRegistrationForm
+from ..models import Account
+
 logger = logging.getLogger(__name__)
+
 
 class RegisterView(View):
     template_name = 'users/register.html'
@@ -23,7 +25,9 @@ class RegisterView(View):
         form = self.form_class(request.POST)
         if form.is_valid():
             form.save()
-            messages.success(request, 'Account was created for {}'.format(form.cleaned_data['email']))
+            messages.success(
+                request, 'Account was created for {}'.format(form.cleaned_data['email'])
+            )
             return redirect('login')
 
         return render(request, self.template_name, {'form': form})

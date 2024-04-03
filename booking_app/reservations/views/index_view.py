@@ -1,15 +1,15 @@
-from django.shortcuts import render, redirect
-from django.utils import timezone
-from django.contrib.auth.decorators import login_required
-from django.views import View
 from django.contrib import messages
-from django.db.models import Q
-from ..models.products import Desk, Room, Parking
-from ..models.reservations import Reservation
-from ..forms import ReserveDeskForm
-from users.models import Account
+from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.db.models import Q
+from django.shortcuts import redirect, render
+from django.utils import timezone
+from django.views import View
+from users.models import Account
 
+from ..forms import ReserveForm
+from ..models.products import Desk, Parking, Room
+from ..models.reservations import Reservation
 
 
 class IndexView(LoginRequiredMixin, View):

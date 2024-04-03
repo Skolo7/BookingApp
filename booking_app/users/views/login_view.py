@@ -1,16 +1,19 @@
-from django.shortcuts import render, redirect
+import logging
+
 from django.contrib import messages
-from django.urls import reverse
 from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth.forms import UserCreationForm
+from django.shortcuts import redirect, render
+from django.urls import reverse
+from django.views import View
+
 from ..forms import UserLoginForm, UserRegistrationForm
 from ..models import Account
-from django.views import View
-from django.contrib.auth.forms import UserCreationForm
-import logging
 
 logger = logging.getLogger(__name__)
 
-class LoginView(View): # FormView
+
+class LoginView(View):  # FormView
     template_name = 'users/login.html'
     form_class = UserLoginForm
 

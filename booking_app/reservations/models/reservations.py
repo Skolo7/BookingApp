@@ -1,6 +1,7 @@
 from django.conf import settings
 from django.db import models
-from .products import Desk, Room, Parking
+
+from .products import Desk, Parking, Room
 
 
 class Reservation(models.Model):
@@ -9,7 +10,7 @@ class Reservation(models.Model):
         ROOM = "ROOM", "ROOM"
         PARKING = "PARKING", "PARKING"
 
-    start_date = models.DateField(help_text="date when reservations began")
+    start_date = models.DateField()
     end_date = models.DateField()
     created_at = models.DateTimeField(auto_now=True)
     desk = models.ForeignKey(
@@ -43,9 +44,10 @@ class Reservation(models.Model):
         blank=True,
         max_length=255,
     )
-    person = models.ForeignKey(settings.AUTH_USER_MODEL,
-                               on_delete=models.CASCADE, related_name='reservations')
+    person = models.ForeignKey(
+        settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='reservations'
+    )
     type = models.CharField(max_length=35, choices=ReservationTypes.choices)
-
-    def __str__(self) -> str:
-        return str(self.title)
+    #
+    # def __str__(self) -> str:
+    #     return self.title or ''

@@ -16,12 +16,20 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 
-from .views import IndexView, ParkingView, ReservationListView, ReserveDeskView, FilterDeskView
+from .views import (
+    FilterDeskView,
+    FilterParkingView,
+    IndexView,
+    ReservationListView,
+    ReserveDeskView,
+    ReserveParkingView,
+)
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('user_reservations/', ReservationListView.as_view(), name='user_reservations'),
     path('reserve/', ReserveDeskView.as_view(), name='reserve'),
-    path('parking/', ParkingView.as_view(), name='parking'),
-    path('filter-desks', FilterDeskView.as_view(), name='filter-desk-view')
+    path('parking/', ReserveParkingView.as_view(), name='parking'),
+    path('filter-desks', FilterDeskView.as_view(), name='filter-desk-view'),
+    path('filter-parkings', FilterParkingView.as_view(), name='filter-parking-view'),
 ]

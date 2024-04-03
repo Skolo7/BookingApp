@@ -1,54 +1,59 @@
 {% extends "index.html" %}
 {% load static %}
 {% block head %}
-<link href="{% static 'assets/css/office.css' %}" rel="stylesheet">
+    <link href="{% static 'assets/css/office.css' %}" rel="stylesheet">
 {% endblock %}
 {% block content %}
-    <nav class="navbar navbar-main navbar-expand-lg mx-5 px-0 shadow-none rounded" id="navbarBlur" navbar-scroll="true">
+    <nav class="navbar navbar-main navbar-expand-lg mx-5 px-0 shadow-none rounded"
+         id="navbarBlur"
+         navbar-scroll="true">
         <div class="container-fluid py-1 px-2">
             <nav aria-label="breadcrumb">
-                  <form method="post" id="scope" action="{%  url 'filter-desk-view' %}"> {% csrf_token %}
-                      <input type="hidden" name="form_type" value="scope">
+                <form method="post" id="scope" action="{% url 'filter-desk-view' %}">
                     {% csrf_token %}
-                    {{ filter_form.as_p }}
-                    <button type="submit">Submit</button>
+                    <input type="hidden" name="form_type" value="scope">
+                    {% csrf_token %}
+                    {{ filter_form }}
+                    <button type="submit" class="btn btn-primary btn-lg">Submit</button>
                 </form>
             </nav>
-            <div class="collapse navbar-collapse mt-sm-0 mt-2 me-md-0 me-sm-4" id="navbar">
-            </div>
+            <div class="collapse navbar-collapse mt-sm-0 mt-2 me-md-0 me-sm-4"
+                 id="navbar"></div>
         </div>
     </nav>
-
     <div class="container">
-        <img src="{% static 'assets/img/office.jpg' %}" alt="office Image" class="office-image">
-
+        <img src="{% static 'assets/img/office.jpg' %}"
+             alt="office Image"
+             class="office-image">
         {% for desk in all_desks %}
-            <button class="free {{ desk.type }} button{{ desk.number }}" data-toggle="modal" data-target="#myModal"
-                    data-value="{{ desk.name }}_{{ desk.number }}_{{ desk.type }}">{{ desk.name }} {{ desk.number }}
+            <button class="free {{ desk.type }} button{{ desk.number }}"
+                    data-toggle="modal"
+                    data-target="#myModal"
+                    data-value="{{ desk.name }}_{{ desk.number }}_{{ desk.type }}_desk">
+                {{ desk.name }} {{ desk.number }}
             </button>
         {% endfor %}
-        <button class="button31" data-toggle="modal" data-target="#myModal" data-value="blue_conference_room">Blue
-            Conference Room
-        </button>
-        <button class="button32" data-toggle="modal" data-target="#myModal" data-value="green_conference_room">Green
-        </button>
-        <button class="button33" data-toggle="modal" data-target="#myModal" data-value="yellow_conference_room">Yellow
-        </button>
-        <button class="button34" data-toggle="modal" data-target="#myModal" data-value="red_conference_room">Red
-        </button>
+        {% for room in all_rooms %}
+            <button class="free {{ room.type }} button{{ room.number }}"
+                    data-toggle="modal"
+                    data-target="#myModal"
+                    data-value="{{ room.name }}_{{ room.number }}_{{ room.type }}_room">
+                {{ room.name }} {{ room.number }}
+            </button>
+        {% endfor %}
     </div>
-
     <div class=" modal fade" id="myModal">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h4 class="modal-title">Zarezerwuj to biurko: </h4>
+                    <h4 class="modal-title">Zarezerwuj to:</h4>
                     <button type="button" class="close" data-dismiss="modal">&times;</button>
                 </div>
                 <div class="modal-body">
                     <form method="post" id="reserve" action="{% url 'reserve' %}">
                         {% csrf_token %}
-                        <input type="hidden" name="desk_number" id="deskNumber">
+                        <input type="hidden" name="number" id="number">
+                        <input type="hidden" name="type" id="type">
                         {{ reservation_form.as_p }}
                         <div class="modal-footer">
                             <button type="submit" class="btn btn-primary">Save</button>
@@ -61,14 +66,17 @@
     </div>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
-    <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <link rel="stylesheet"
+          href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
     <script>
         $(document).ready(function () {
 
             $('.free').click(function () {
-                var deskNumber = $(this).data('value').split('_')[1];
-                $('#deskNumber').val(deskNumber);
+                var type = $(this).data('value').split('_')[3];
+                var number = $(this).data('value').split('_')[1];
+$               ('#type').val(type);
+$               ('#number').val(number);
             })
 
             $("#myModal").on("show.bs.modal", function (e) {

@@ -1,27 +1,40 @@
 {% extends "index.html" %}
 {% load static %}
-
 {% block content %}
-<ul>
-    {% for reservation in reservations %}
-
-    <li>{{ reservation.name }}</li>
-    <li>{{ reservation.phone_number }}</li>
-    <li>{{ reservation.email }}</li>
-    <li>{{ reservation.date }}</li>
-    <li>{{ reservation.time }}</li>
-    <li>{{ reservation.number_of_party }}</li>
-
-    <hr/>
-    <!-- If object_list is empty  -->
-    {% empty %}
-    <li>No Reservation have been made</li>
-    {% endfor %}
-</ul>
+    <head>
+        <title>My Reservations</title>
+    </head>
+    <body>
+        <h1>Reservations:</h1>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">ID</th>
+                    <th scope="col">First Name</th>
+                    <th scope="col">Last Name</th>
+                    <th scope="col">Date</th>
+                    <th scope="col">Object</th>
+                </tr>
+            </thead>
+            {% for reservation in reservations %}
+                <tbody>
+                    <tr>
+                        <th scope="row">1</th>
+                        <td>{{ reservation.id }}</td>
+                        <td>{{ reservation.person.first_name }}</td>
+                        <td>{{ reservation.person.last_name }}</td>
+                        <td>{{ reservation.start_date }} - {{ reservation.end_date }}</td>
+                        <td>{{ reservation.type }}</td>
+                    </tr>
+                </tbody>
+            {% endfor %}
+        </table>
+    </body>
     <script>
-        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-        <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
-        <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
+<link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
     </script>
 {% endblock %}

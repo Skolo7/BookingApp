@@ -10,13 +10,13 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.1/ref/settings/
 """
 
-from pathlib import Path
-import environ
 import os
+from pathlib import Path
+
+import environ
 from django.urls import reverse_lazy
 
 from .env import env
-
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -55,7 +55,6 @@ INSTALLED_EXTENSIONS = [
     'notification',
     'users',
 ]
-
 
 
 INSTALLED_APPS += INSTALLED_EXTENSIONS
@@ -101,7 +100,7 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
         'NAME': env('DB_NAME'),
-        'USER':  env('DB_USER'),
+        'USER': env('DB_USER'),
         'PASSWORD': env('DB_PASSWORD'),
         'HOST': env('DB_HOST'),
         'PORT': env('DB_PORT'),
@@ -143,14 +142,10 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/4.1/howto/static-files/
 
 STATIC_URL = '/static/'
-STATICFILES_DIRS = (
-    os.path.join(BASE_DIR, 'static'),
-)
+STATICFILES_DIRS = (os.path.join(BASE_DIR, 'static'),)
 LOGIN_REDIRECT_URL = '/'
 LOGIN_URL = reverse_lazy('login')
 # LOGOUT_REDIRECT_URL = 'login/'
-
-
 
 
 # Default primary key field type
@@ -170,7 +165,7 @@ LOGGING = {
     'root': {
         'handlers': ['console'],
         'level': 'INFO',
-    }
+    },
 }
 
 

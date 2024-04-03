@@ -1,6 +1,7 @@
 from django.contrib import admin
 
-from .models import Reservation, Parking, Desk, Room
+from .models import Desk, Parking, Reservation, Room
+
 
 @admin.register(Reservation)
 class AdminReservation(admin.ModelAdmin):
@@ -11,14 +12,17 @@ class AdminReservation(admin.ModelAdmin):
 class AdminDesk(admin.ModelAdmin):
     list_display = ('id', 'number', 'status', 'type')
     list_filter = ('status', 'type')
-    ordering = ('id', 'number', )
+    ordering = (
+        'id',
+        'number',
+    )
 
 
 @admin.register(Parking)
 class AdminParking(admin.ModelAdmin):
-    list_display = ('number', )
+    list_display = ('number', 'status')
 
 
 @admin.register(Room)
 class AdminRoom(admin.ModelAdmin):
-    list_display = ('number', )
+    list_display = ('number', 'max_amount_of_people', 'status', 'type')

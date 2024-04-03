@@ -4,7 +4,6 @@ from django.db import migrations
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
         ("reservations", "0008_alter_desk_status_alter_parking_status_and_more"),
     ]

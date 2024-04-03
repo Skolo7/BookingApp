@@ -3,12 +3,9 @@
 from django.db import migrations
 
 
-
 class Migration(migrations.Migration):
-
     dependencies = [
         ("reservations", "0006_alter_reservation_parking_alter_reservation_room"),
     ]
 
-    operations = [
-    ]
+    operations = []

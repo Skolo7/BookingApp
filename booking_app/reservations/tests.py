@@ -1,19 +1,22 @@
+from datetime import date, timedelta
 from http import HTTPStatus
-
+from pprint import pprint as pp
 
 from django.test import TestCase, tag
 from django.urls import reverse
-from datetime import date, timedelta
 from django.utils import timezone
-from pprint import pprint as pp
-from .models import Desk, Reservation
-from users.models import Account
 from resources.scripts.products import create_desks, create_parking_spots, create_rooms
+from users.models import Account
+
+from .models import Desk, Reservation
 from .views import ReserveDeskView
+
 
 class TestReserveDeskView(TestCase):
     def setUp(self) -> None:
-        self.user = Account.objects.create_user(username='test@user.com', password='Qwerty123!')
+        self.user = Account.objects.create_user(
+            username='test@user.com', password='Qwerty123!'
+        )
         create_desks()
         # create_parking_spots()
         # create_rooms()
@@ -30,7 +33,6 @@ class TestReserveDeskView(TestCase):
         self.assertTemplateUsed(response, 'reserve.html')
         number_of_desks = len(response.context['all_desks'])
         self.assertEqual(number_of_desks, 30)
-
 
     def test_get_reserve_today_returns_only_desks_which_are_not_reserved(self):
         self.client.force_login(self.user)
@@ -64,7 +66,6 @@ class TestReserveDeskView(TestCase):
         self.assertTemplateUsed(response, 'reserve.html')
         self.assertEqual(Reservation.objects.count(), 1)
 
-
     def test_get_default_desks(self):
         self.client.force_login(self.user)
         today = timezone.now().date()
@@ -79,5 +80,3 @@ class TestReserveDeskView(TestCase):
     #
     #     self.assertEqual(default_date, date_form.fields['start_date'].initial)
     #     self.assertEqual(default_date, date_form.fields['end_date'].initial)
-
-

@@ -1,11 +1,10 @@
-from datetime import date, timedelta
+from datetime import timedelta
 from http import HTTPStatus
-from pprint import pprint as pp
 
 from django.test import TestCase, tag
 from django.urls import reverse
 from django.utils import timezone
-from resources.scripts.products import create_desks, create_parking_spots, create_rooms
+from resources.scripts.products import create_desks
 from users.models import Account
 
 from .models import Desk, Reservation

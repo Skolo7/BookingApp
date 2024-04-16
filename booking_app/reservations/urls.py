@@ -19,7 +19,6 @@ from django.urls import path
 from .views import (
     FilterDeskView,
     FilterParkingView,
-    IndexView,
     ReservationListView,
     ReserveDeskView,
     ReserveParkingView,

@@ -11,8 +11,7 @@ from ..models.reservations import Reservation
 class FilterParkingView(LoginRequiredMixin, View):
     def post(self, request, *args, **kwargs):
         form = FilterAvailabilityForm(request.POST)
-        print(form)
-        print(form.is_valid())
+
         start_date, end_date = (
             form.cleaned_data['start_date'],
             form.cleaned_data['end_date'],
@@ -23,7 +22,7 @@ class FilterParkingView(LoginRequiredMixin, View):
 
 
 class ReserveParkingView(LoginRequiredMixin, View):
-    template_name = 'parking.html'
+    template_name = 'reserve_parking.html'
 
     def get(self, request, *args, **kwargs):
         today = timezone.now().date()
@@ -39,7 +38,7 @@ class ReserveParkingView(LoginRequiredMixin, View):
         else:
             available_parkings = self.get_default_parkings(today)
         return self.render_with_form_and_default_parkings(
-            request, available_parkings, today, reservation_form
+            request, reservation_form, available_parkings, today
         )
 
     def post(self, request, *args, **kwargs):
@@ -69,9 +68,6 @@ class ReserveParkingView(LoginRequiredMixin, View):
         all_parkings = set(Parking.objects.all())
         return all_parkings - reserved_parkings_today
 
-    # def render_with_parkings(self, request, available_parkings):
-    #     context = {'all_parkings': available_parkings}
-    #     return render(request, self.template_name, context=context)
 
     def render_with_form_and_default_parkings(self, request, form, parkings, today):
         context = {

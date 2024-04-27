@@ -1,0 +1,126 @@
+.container {
+    position: relative;
+    width: 100%;
+    height: 100%;
+}
+
+
+.parking-image {
+    width: 100%;
+    height: 100%;
+}
+
+.container button {
+    position: absolute;
+    font-size: 12px;
+    cursor: pointer;
+}
+
+.free {
+    border: 1px solid #61ad4e;
+    background: rgba(126, 201, 107, 0.5);
+    box-shadow: 0 6px 6px rgba(0, 0, 0, 0.6);
+}
+
+.parking_place {
+    width: 73px;
+    height: 142px;
+}
+
+
+.data-picker {
+    width: 50px;
+    height: 20px;
+}
+
+.button1 {
+    top: 10px;
+    left: 747px;
+}
+
+
+.button2 {
+    top: 10px;
+    left: 830px;
+}
+
+.button3 {
+    top: 10px;
+    left: 914px;
+}
+
+.button4 {
+    top: 589px;
+    left: 107px;
+}
+
+.button5 {
+    top: 589px;
+    left: 188px;
+}
+
+.button6 {
+    top: 589px;
+    left: 269px;
+}
+
+.button7 {
+    top: 589px;
+    left: 352px;
+}
+
+.button8 {
+    top: 589px;
+    left: 433px;
+}
+
+.button9 {
+    top: 589px;
+    left: 515px;
+}
+
+.button10 {
+    top: 589px;
+    left: 596px;
+}
+
+.button11 {
+    top: 589px;
+    left: 679px;
+}
+
+.button12 {
+    top: 589px;
+    left: 762px;
+}
+
+.button13 {
+    top: 589px;
+    left: 844px;
+}
+
+.button14 {
+    top: 589px;
+    left: 926px;
+}
+
+
+.modal-content {
+    display: flex;
+    /*position: fixed;*/
+    /*top: 50%;*/
+    /*left: 50%;*/
+    /*transform: translate(-50%, -50%);*/
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+    /*z-index: 2;*/
+}
+
+.modal-content .close-btn {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    cursor: pointer;
+}

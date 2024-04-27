@@ -1,0 +1,36 @@
+{% extends "index.html" %}
+{% load static %}
+{% block content %}
+    <!DOCTYPE html>
+    <html>
+        <head>
+            <title>My Reservations</title>
+        </head>
+        <body>
+            <h1>Reservations:</h1>
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">ID</th>
+                        <th scope="col">First Name</th>
+                        <th scope="col">Last Name</th>
+                        <th scope="col">Date</th>
+                        <th scope="col">Object</th>
+                    </tr>
+                </thead>
+                {% for reservation, num in reservations, range(1, len(reservations)) %}
+                    <tbody>
+                        <tr>
+                            <th scope="row">num</th>
+                            <td>{{ reservation.id }}</td>
+                            <td>{{ reservation.person_id }}</td>
+                            <td></td>
+                            <td>{{ reservation.start_date }}{{ reservation.end_date }}</td>
+                            <td>{{ reservation.type }}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </body>
+        </html>
+    {% endblock %}

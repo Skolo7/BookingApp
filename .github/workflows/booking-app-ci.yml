@@ -41,7 +41,7 @@ jobs:
         pip install poetry
     - name: Install Dependencies
       run: |
-        poetry install
+        poetry install --with dev
     - name: Run Tests
       run: |
         cd booking_app
@@ -52,3 +52,13 @@ jobs:
         DB_PASSWORD: ${{ secrets.DB_PASSWORD }}
         DB_HOST: ${{ secrets.DB_HOST }}
         DB_PORT: ${{ secrets.DB_PORT }}
+    - name: Run Bandit
+      run: |
+        poetry run bandit -r .
+    - name: Run Safety
+      run: |
+        poetry run safety check
+      continue-on-error: true
+    - name: Run Ruff
+      run: |
+        poetry run ruff booking_app

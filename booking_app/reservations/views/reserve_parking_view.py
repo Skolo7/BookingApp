@@ -1,3 +1,4 @@
+from django.contrib import messages
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.shortcuts import redirect, render
 from django.utils import timezone
@@ -49,9 +50,11 @@ class ReserveParkingView(LoginRequiredMixin, View):
             parking_number = form.data['parking_number']
             reservation.parking = Parking.objects.get(number=parking_number)
             reservation.save()
-            self.get(request)
+            messages.success(
+                request, 'Rezerwacja miejsca parkingowego została pomyślnie utworzona.'
+            )
         else:
-            print(form.errors)
+            messages.error(request, 'Wystąpił błąd podczas tworzenia rezerwacji.')
         return self.get(request)
 
     def get_filtered_parkings(self, form):
@@ -67,7 +70,6 @@ class ReserveParkingView(LoginRequiredMixin, View):
         reserved_parkings_today = {reserv.parking for reserv in reservations_today}
         all_parkings = set(Parking.objects.all())
         return all_parkings - reserved_parkings_today
-
 
     def render_with_form_and_default_parkings(self, request, form, parkings, today):
         context = {

@@ -208,6 +208,10 @@
                                         <form action="{% url 'register' %}" method="POST" action="">
                                             {% csrf_token %}
                                             <div class="mb-3">
+                                                <label>Username</label>
+                                                {{ form.username }}
+                                            </div>
+                                            <div class="mb-3">
                                                 <label>First Name</label>
                                                 {{ form.first_name }}
                                             </div>

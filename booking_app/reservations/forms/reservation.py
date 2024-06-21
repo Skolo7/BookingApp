@@ -19,8 +19,9 @@ class ReserveForm(forms.ModelForm):
             'end_date': DateInput(
                 attrs={
                     'class': 'form-control',
-                    'type': 'date',
                     'placeholder': 'Select end date',
+                    'value': date.today().strftime('%Y-%m-%d'),
+                    'min': date.today().strftime('%Y-%m-%d'),
                 }
             ),
         }

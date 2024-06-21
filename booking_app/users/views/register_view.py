@@ -22,7 +22,8 @@ class RegisterView(View):
         if form.is_valid():
             form.save()
             messages.success(
-                request, 'Account was created for {}'.format(form.cleaned_data['email'])
+                request,
+                'Account was created for {}'.format(form.cleaned_data['username']),
             )
             return redirect('login')
 

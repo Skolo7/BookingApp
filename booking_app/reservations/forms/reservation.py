@@ -1,5 +1,6 @@
 from django import forms
 from django.core.exceptions import ValidationError
+from datetime import date
 
 from ..models import Reservation
 
@@ -14,13 +15,17 @@ class ReserveForm(forms.ModelForm):
         fields = ['start_date', 'end_date']
         widgets = {
             'start_date': DateInput(
-                attrs={'class': 'form-control', 'placeholder': 'Select start date'}
+                attrs={'class': 'form-control',
+                       'placeholder': 'Select start date',
+                       'value': date.today().strftime('%Y-%m-%d'),
+                       'min': date.today().strftime('%Y-%m-%d')}
             ),
             'end_date': DateInput(
                 attrs={
                     'class': 'form-control',
-                    'type': 'date',
                     'placeholder': 'Select end date',
+                    'value': date.today().strftime('%Y-%m-%d'),
+                    'min': date.today().strftime('%Y-%m-%d'),
                 }
             ),
         }

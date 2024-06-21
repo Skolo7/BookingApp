@@ -1,3 +1,4 @@
+from django.contrib import messages
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.shortcuts import redirect, render
 from django.utils import timezone
@@ -38,6 +39,9 @@ class ReserveDeskView(LoginRequiredMixin, View):
         if start_date_str and end_date_str:
             start_date = timezone.datetime.strptime(start_date_str, "%Y-%m-%d").date()
             end_date = timezone.datetime.strptime(end_date_str, "%Y-%m-%d").date()
+            if start_date < today or end_date < today:
+                messages.error(request, 'Cant reserve for past days.')
+                return redirect('reserve_desk')
             available_desks = self.get_available_desks(start_date, end_date)
             available_rooms = self.get_available_rooms(start_date, end_date)
         else:
@@ -54,6 +58,12 @@ class ReserveDeskView(LoginRequiredMixin, View):
             reservation = form.save(commit=False)
             reservation.person = self.request.user
             number, type = form.data['number'], form.data['type']
+            today = timezone.now().date()
+
+            if reservation.start_date < today or reservation.end_date < today:
+                messages.error(request, 'Cant reserve for past days!')
+                return self.get(request)
+
             if type == 'room':
                 reservation.room = Room.objects.get(number=number)
                 reservation.type = 'ROOM'
@@ -62,9 +72,9 @@ class ReserveDeskView(LoginRequiredMixin, View):
                 reservation.type = 'DESK'
 
             reservation.save()
-            self.get(request)
+            messages.success(request, 'Reservation confirmed.')
         else:
-            print(form.errors)
+            messages.error(request, 'Reservation failure.')
         return self.get(request)
 
     @staticmethod

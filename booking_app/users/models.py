@@ -3,4 +3,12 @@ from django.db import models
 
 
 class Account(AbstractUser):
-    username = models.EmailField(unique=True, null=True)
+    profile_picture = models.ImageField(
+        upload_to='profile_pics/',
+        blank=True,
+        null=True,
+        default='profile_pics/Profile_pic.png',
+    )
+
+    def __str__(self) -> str:
+        return self.username if self.username else "Unnamed Account"

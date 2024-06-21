@@ -9,7 +9,10 @@ class UserRegistrationForm(UserCreationForm):
     password2 = forms.CharField(
         label="Password confirmation", widget=forms.PasswordInput
     )
+    email = forms.EmailField(
+        required=True, help_text="Required. Enter a valid email address."
+    )
 
     class Meta:
         model = Account
-        fields = ["first_name", "last_name", "email"]
+        fields = ["username", "first_name", "last_name"]

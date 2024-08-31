@@ -71,7 +71,7 @@ class ReserveParkingView(LoginRequiredMixin, View):
         all_parkings = set(Parking.objects.all())
         return all_parkings - reserved_parkings_today
 
-    def render_with_form_and_default_parkings(self, request, form, parkings, today):
+    def render_with_form_and_default_parkings(self, request, form, parkings, today):  # TODO Typing
         context = {
             'all_parkings': parkings,
             'today': today,
@@ -80,7 +80,7 @@ class ReserveParkingView(LoginRequiredMixin, View):
         }
         return render(request, self.template_name, context=context)
 
-    def get_available_parkings(self, start_date, end_date):
+    def get_available_parkings(self, start_date, end_date): # TODO Typing
         available_parkings = set(Parking.objects.all()) - {
             reserv.parking
             for reserv in Reservation.objects.filter(

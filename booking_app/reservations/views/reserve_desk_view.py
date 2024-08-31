@@ -78,7 +78,7 @@ class ReserveDeskView(LoginRequiredMixin, View):
         return self.get(request)
 
     @staticmethod
-    def get_default_desks(today):
+    def get_default_desks(today):  # TODO Typing
         reservations_today = Reservation.objects.filter(
             start_date__range=(today, today)
         ).select_related('desk')
@@ -88,7 +88,7 @@ class ReserveDeskView(LoginRequiredMixin, View):
 
     def render_with_form_and_desks(
         self, request, desks, rooms, today, reservation_form
-    ):
+    ): # TODO Typing
         context = {
             'all_desks': desks,
             'all_rooms': rooms,
@@ -98,15 +98,15 @@ class ReserveDeskView(LoginRequiredMixin, View):
         }
         return render(request, self.template_name, context=context)
 
-    def get_filtered_desks(self, form):
+    def get_filtered_desks(self, form):  # TODO Typing
         start_date = form.cleaned_data['start_date']
         end_date = form.cleaned_data['end_date']
         return self.get_available_desks(start_date=start_date, end_date=end_date)
 
-    def get_available_desks(self, start_date, end_date):
-        available_desks = set(Desk.objects.all()) - {
+    def get_available_desks(self, start_date, end_date): # TODO Typing
+        available_desks = set(Desk.objects.all()) - { # TODO literally
             reserv.desk
-            for reserv in Reservation.objects.filter(
+            for reserv in Reservation.objects.filter( # TODO literally
                 start_date__range=(start_date, end_date),
                 end_date__range=(start_date, end_date),
             ).select_related('desk')
@@ -114,9 +114,9 @@ class ReserveDeskView(LoginRequiredMixin, View):
         return available_desks
 
     def get_available_rooms(self, start_date, end_date):
-        avaialble_rooms = set(Room.objects.all()) - {
+        avaialble_rooms = set(Room.objects.all()) - { # TODO literally
             reserv.room
-            for reserv in Reservation.objects.filter(
+            for reserv in Reservation.objects.filter( # TODO literally
                 start_date__range=(start_date, end_date),
                 end_date__range=(start_date, end_date),
             ).select_related('room')

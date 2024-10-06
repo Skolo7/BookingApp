@@ -1,5 +1,6 @@
 from django.contrib import admin
 from django.urls import path
+from .API.routers import router
 
 from .views import (
     FilterDeskView,
@@ -9,6 +10,7 @@ from .views import (
     ReserveParkingView,
 )
 
+
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('user_reservations/', ReservationListView.as_view(), name='user_reservations'),
@@ -17,3 +19,5 @@ urlpatterns = [
     path('filter-desks', FilterDeskView.as_view(), name='filter-desk-view'),
     path('filter-parkings', FilterParkingView.as_view(), name='filter-parking-view'),
 ]
+
+urlpatterns += router.urls

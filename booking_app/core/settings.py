@@ -20,6 +20,7 @@ DEBUG = env('DEBUG')
 ALLOWED_HOSTS = []
 
 
+
 INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
@@ -30,6 +31,7 @@ INSTALLED_APPS = [
     'django_extensions',
     'bootstrap4',
     'axes',
+    'rest_framework',
 ]
 
 INSTALLED_EXTENSIONS = [

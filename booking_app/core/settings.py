@@ -20,7 +20,6 @@ DEBUG = env('DEBUG')
 ALLOWED_HOSTS = []
 
 
-
 INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
@@ -32,6 +31,7 @@ INSTALLED_APPS = [
     'bootstrap4',
     'axes',
     'rest_framework',
+    'rest_framework_simplejwt',
 ]
 
 INSTALLED_EXTENSIONS = [
@@ -39,6 +39,14 @@ INSTALLED_EXTENSIONS = [
     'notification',
     'users',
 ]
+
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework_simplejwt.authentication.JWTAuthentication',
+        'rest_framework.authentication.SessionAuthentication',
+    ),
+    'DEFAULT_PERMISSION_CLASSES': ('rest_framework.permissions.IsAuthenticated',),
+}
 
 
 INSTALLED_APPS += INSTALLED_EXTENSIONS
@@ -109,7 +117,7 @@ AUTH_PASSWORD_VALIDATORS = [
 ]
 
 AUTHENTICATION_BACKENDS = [
-    'axes.backends.AxesStandaloneBackend',
+    # 'axes.backends.AxesStandaloneBackend',
     'django.contrib.auth.backends.ModelBackend',
 ]
 

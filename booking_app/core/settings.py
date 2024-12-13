@@ -36,7 +36,6 @@ INSTALLED_APPS = [
 
 INSTALLED_EXTENSIONS = [
     'reservations',
-    'notification',
     'users',
 ]
 

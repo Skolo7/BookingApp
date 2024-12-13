@@ -1,36 +1,31 @@
 import logging
-
 from django.contrib import messages
 from django.contrib.auth import authenticate, login
-from django.shortcuts import redirect, render
-from django.views import View
+from django.urls import reverse_lazy
+from django.views.generic.edit import FormView
 
 from ..forms import UserLoginForm
 
 logger = logging.getLogger(__name__)
 
 
-class LoginView(View):  # FormView
+class LoginView(FormView):
     template_name = 'users/login.html'
     form_class = UserLoginForm
+    success_url = reverse_lazy('index')
 
-    def get(self, request, *args, **kwargs):
-        form = self.form_class()
-        context = {'form': form}
-        return render(request, self.template_name, context)
+    def form_valid(self, form):
+        username = form.cleaned_data.get('username')
+        password = form.cleaned_data.get('password')
 
-    def post(self, request, *args, **kwargs):
-        form = self.form_class(request=request, data=request.POST)
-        if form.is_valid():
-            username = form.cleaned_data.get('username')
-            password = form.cleaned_data.get('password')
-
-            user = authenticate(request=request, username=username, password=password)
-            if user is not None:
-                login(request, user)
-                return redirect('index')
+        user = authenticate(request=self.request, username=username, password=password)
+        if user is not None:
+            login(self.request, user)
+            return super().form_valid(form)
         else:
-            messages.error(request, 'Invalid Login or Password')
+            messages.error(self.request, 'Invalid Login or Password')
+            return self.form_invalid(form)
 
-        context = {'form': form}
-        return render(request, self.template_name, context)
+    def form_invalid(self, form):
+        messages.error(self.request, 'Invalid Login or Password')
+        return super().form_invalid(form)

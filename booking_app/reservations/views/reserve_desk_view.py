@@ -4,11 +4,13 @@ from django.shortcuts import redirect, render
 from django.utils import timezone
 from django.views import View
 from icecream import ic
+from django.http import HttpResponse
+from django.urls import reverse
+
 
 from ..forms import FilterAvailabilityForm, ReserveForm
 from ..models.products import Desk, Room
 from ..models.reservations import Reservation
-
 
 class FilterDeskView(LoginRequiredMixin, View):
     def post(self, request, *args, **kwargs):
@@ -40,7 +42,7 @@ class ReserveDeskView(LoginRequiredMixin, View):
             start_date = timezone.datetime.strptime(start_date_str, "%Y-%m-%d").date()
             end_date = timezone.datetime.strptime(end_date_str, "%Y-%m-%d").date()
             if start_date < today or end_date < today:
-                messages.error(request, 'Cant reserve for past days.')
+                messages.error(request, 'Cannot reserve for past days.')
                 return redirect('reserve_desk')
             available_desks = self.get_available_desks(start_date, end_date)
             available_rooms = self.get_available_rooms(start_date, end_date)
@@ -54,20 +56,21 @@ class ReserveDeskView(LoginRequiredMixin, View):
 
     def post(self, request, *args, **kwargs):
         form = ReserveForm(request.POST)
+        today = timezone.now().date()
+
         if form.is_valid():
             reservation = form.save(commit=False)
             reservation.person = self.request.user
-            number, type = form.data['number'], form.data['type']
-            today = timezone.now().date()
+            number, reservation_type = form.data['number'], form.data['type'].upper()
 
             if reservation.start_date < today or reservation.end_date < today:
-                messages.error(request, 'Cant reserve for past days!')
+                messages.error(request, "Cannot reserve for past days.")
                 return self.get(request)
 
-            if type == 'room':
+            if reservation_type == 'room':
                 reservation.room = Room.objects.get(number=number)
                 reservation.type = 'ROOM'
-            elif type == 'desk':
+            elif reservation_type == 'desk':
                 reservation.desk = Desk.objects.get(number=number)
                 reservation.type = 'DESK'
 
@@ -78,7 +81,7 @@ class ReserveDeskView(LoginRequiredMixin, View):
         return self.get(request)
 
     @staticmethod
-    def get_default_desks(today):  # TODO Typing
+    def get_default_desks(today: datetime.datetime) -> set[Desk]:
         reservations_today = Reservation.objects.filter(
             start_date__range=(today, today)
         ).select_related('desk')
@@ -103,25 +106,25 @@ class ReserveDeskView(LoginRequiredMixin, View):
         end_date = form.cleaned_data['end_date']
         return self.get_available_desks(start_date=start_date, end_date=end_date)
 
-    def get_available_desks(self, start_date, end_date): # TODO Typing
-        available_desks = set(Desk.objects.all()) - { # TODO literally
-            reserv.desk
-            for reserv in Reservation.objects.filter( # TODO literally
+    def get_available_desks(self, start_date, end_date) -> set[Desk]:
+        available_desks = set(Desk.objects.all()) - {
+            reservation.desk
+            for reservation in Reservation.objects.filter(
                 start_date__range=(start_date, end_date),
                 end_date__range=(start_date, end_date),
             ).select_related('desk')
         }
         return available_desks
 
-    def get_available_rooms(self, start_date, end_date):
-        avaialble_rooms = set(Room.objects.all()) - { # TODO literally
-            reserv.room
-            for reserv in Reservation.objects.filter( # TODO literally
+    def get_available_rooms(self, start_date: datetime.datetime, end_date: datetime.datetime) -> set[Room]:
+        available_rooms = set(Room.objects.all()) - {
+            reservation.room
+            for reservation in Reservation.objects.filter(
                 start_date__range=(start_date, end_date),
                 end_date__range=(start_date, end_date),
             ).select_related('room')
         }
-        return avaialble_rooms
+        return available_rooms
 
     @staticmethod
     def get_default_rooms(today):

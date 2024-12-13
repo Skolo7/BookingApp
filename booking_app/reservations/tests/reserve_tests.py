@@ -140,9 +140,10 @@ class TestReserveDeskView2(TestCase):
             Reservation.objects.filter(desk=self.desk1, person=self.user).exists()
         )
 
-    def test_create_reservation_for_past_date_return_bad_request(
+    @tag('test3')
+    def test_create_reservation_for_past_date(
         self,
-    ):  # TODO logic is not working as expected to verify?
+    ):
         past_date = timezone.now().date() - timedelta(days=1)
         response = self.client.post(
             reverse('reserve'),

@@ -1,3 +1,4 @@
+import datetime
 from django.contrib import messages
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.shortcuts import redirect, render
@@ -12,20 +13,26 @@ from ..forms import FilterAvailabilityForm, ReserveForm
 from ..models.products import Desk, Room
 from ..models.reservations import Reservation
 
+
+
 class FilterDeskView(LoginRequiredMixin, View):
     def post(self, request, *args, **kwargs):
         form = FilterAvailabilityForm(request.POST)
-        print(form)
-        print(form.is_valid())
-        start_date, end_date = (
-            form.cleaned_data['start_date'],
-            form.cleaned_data['end_date'],
-        )
-        start_date_param = start_date.strftime("%Y-%m-%d")
-        end_date_param = end_date.strftime("%Y-%m-%d")
-        return redirect(
-            f'/reserve?start_date={start_date_param}&end_date={end_date_param}'
-        )
+        if form.is_valid():
+            start_date = form.cleaned_data['start_date']
+            end_date = form.cleaned_data['end_date']
+            start_date_param = start_date.strftime("%Y-%m-%d")
+            end_date_param = end_date.strftime("%Y-%m-%d")
+
+            url = reverse('reserve')
+            query_params = f'?start_date={start_date_param}&end_date={end_date_param}'
+
+            return redirect(f'{url}{query_params}')
+        else:
+            messages.error(request, "form is incorrect")
+            return redirect(reverse('reserve'))
+
+
 
 
 class ReserveDeskView(LoginRequiredMixin, View):
@@ -85,13 +92,13 @@ class ReserveDeskView(LoginRequiredMixin, View):
         reservations_today = Reservation.objects.filter(
             start_date__range=(today, today)
         ).select_related('desk')
-        reserved_desks_today = {reserv.desk for reserv in reservations_today}
+        reserved_desks_today = {reservation.desk for reservation in reservations_today}
         all_desks = set(Desk.objects.all())
         return all_desks - reserved_desks_today
 
     def render_with_form_and_desks(
         self, request, desks, rooms, today, reservation_form
-    ): # TODO Typing
+    ) -> HttpResponse:
         context = {
             'all_desks': desks,
             'all_rooms': rooms,
@@ -101,7 +108,7 @@ class ReserveDeskView(LoginRequiredMixin, View):
         }
         return render(request, self.template_name, context=context)
 
-    def get_filtered_desks(self, form):  # TODO Typing
+    def get_filtered_desks(self, form: ReserveForm) -> set[Desk]:
         start_date = form.cleaned_data['start_date']
         end_date = form.cleaned_data['end_date']
         return self.get_available_desks(start_date=start_date, end_date=end_date)
@@ -127,7 +134,7 @@ class ReserveDeskView(LoginRequiredMixin, View):
         return available_rooms
 
     @staticmethod
-    def get_default_rooms(today):
+    def get_default_rooms(today: datetime.datetime) -> set[Room]:
         reservations_today = Reservation.objects.filter(
             start_date__range=(today, today)
         ).select_related('room')

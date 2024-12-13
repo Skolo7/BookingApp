@@ -49,5 +49,5 @@ class Reservation(models.Model):
     )
     type = models.CharField(max_length=35, choices=ReservationTypes.choices)
     #
-    # def __str__(self) -> str:
-    #     return self.title or ''
+    def __str__(self) -> str:
+        return self.title

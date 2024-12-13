@@ -39,14 +39,8 @@ class ReserveForm(forms.ModelForm):
         return cleaned_date
 
 
-# class ReserveParkingForm(forms.ModelForm):
-#     class Meta:
-#         model = Reservation
-#         fields = ['start_date', 'end_date']
-#         widgets
 
-
-class FilterAvailabilityForm(forms.Form):  # FilterDesksForm
+class FilterAvailabilityForm(forms.Form):
     start_date = forms.DateField(
         widget=DateInput(
             attrs={'class': 'form-control', 'placeholder': 'Select start date'}

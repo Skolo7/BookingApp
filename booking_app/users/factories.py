@@ -14,10 +14,3 @@ class AccountFactory(factory.django.DjangoModelFactory):
     last_name = factory.Faker('last_name')
     is_active = True
 
-
-# AccountFactory.create()
-# self.assert(Account.objects.count(), 1)
-# AccountFactory.create_batch(5)
-# self.assert(Account.objects.count(), 5)
-#
-#

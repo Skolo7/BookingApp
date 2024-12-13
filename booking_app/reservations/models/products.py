@@ -28,9 +28,9 @@ class Room(models.Model):
         max_length=10, choices=ProductState.choices, default=ProductState.AVAILABLE
     )
     type = models.CharField(max_length=15, choices=RoomTypes.choices)
-    #
-    # def __str__(self):
-    #     return str(self.type) or ''
+
+    def __str__(self):
+        return str(self.type)
 
 
 class Desk(models.Model):
@@ -47,5 +47,5 @@ class Desk(models.Model):
     )
     type = models.CharField(max_length=15, choices=DeskTypes.choices)
 
-    # def __str__(self):
-    #     return str(self.number) or ''
+    def __str__(self):
+        return str(self.number)

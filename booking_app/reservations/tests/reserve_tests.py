@@ -154,8 +154,10 @@ class TestReserveDeskView2(TestCase):
                 'end_date': past_date,
             },
         )
-        self.assertEqual(response.status_code, HTTPStatus.BAD_REQUEST)
-        self.assertIn("Cant reserve for past days", response.context['messages'])
+        self.assertEqual(response.status_code, HTTPStatus.OK)
+
+        self.assertIn("Cannot reserve for past days", str(list(response.context['messages'])[0]))
+        self.assertEqual(Reservation.objects.count(), 0)
 
     def test_concurrent_reservation_attempts(self):
         from icecream import ic

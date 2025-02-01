@@ -47,5 +47,5 @@ class Desk(models.Model):
     )
     type = models.CharField(max_length=15, choices=DeskTypes.choices)
 
-    def __str__(self):
-        return str(self.number)
+    # def __str__(self):
+    #     return str(self.number)

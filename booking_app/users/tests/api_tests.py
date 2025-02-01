@@ -1,14 +1,14 @@
 from django.test import TestCase, tag
-from rest_framework.test import APIClient
+from django.urls import reverse
+from rest_framework.test import APIClient, APITestCase
 
 from ..factories import AccountFactory
 from ..models import Account
 
 
-@tag('x')
-class AccountTests(TestCase):
+class AccountTests(APITestCase):
     def setUp(self):
-        self.client = APIClient()
+        # self.client = APIClient()
         self.user = AccountFactory.create()
         # self.admin_user = Account.objects.create_superuser(
         #     username='admin',
@@ -18,25 +18,29 @@ class AccountTests(TestCase):
         self.client.force_authenticate(user=self.user)
 
     # GET
-    def test_get_accounts_list(self):  # reverse
-        response = self.client.get('/api/v1/accounts/')
+    def test_get_accounts_list(self):
+        url = reverse('account-list')
+        response = self.client.get(url)
         self.assertEqual(response.status_code, 200)
 
     def test_get_accounts_list_format(self):
-        response = self.client.get('/api/v1/accounts/')
+        url = reverse('account-list')
+        response = self.client.get(url)
         self.assertEqual(response['Content-Type'], 'application/json')
 
-    def test_get_accounts_list_fields(self):  # assertEqual
-        response = self.client.get('/api/v1/accounts/')
+    def test_get_accounts_list_fields(self):
+        url = reverse('account-list')
+        response = self.client.get(url)
+        self.assertEqual(response.status_code, 200)
         data = response.json()
+        expected_keys = {'username', 'first_name', 'last_name', 'email'}
+
         for account in data:
-            self.assertIn('username', account)
-            self.assertIn('first_name', account)
-            self.assertIn('last_name', account)
-            self.assertIn('email', account)
+            self.assertEqual(set(account.keys()), expected_keys)
 
     def test_get_accounts_count(self):
-        response = self.client.get('/api/v1/accounts/')
+        url = reverse('account-list')
+        response = self.client.get(url)
         data = response.json()
         self.assertEqual(len(data), Account.objects.count())
 
@@ -60,8 +64,13 @@ class AccountTests(TestCase):
         self.assertEqual(response.status_code, 201)
 
     def test_create_user_no_username(self):
+        # arrange
         data = {'first_name': 'New', 'last_name': 'User', 'email': 'newuser@test.com'}
+
+        # act
         response = self.client.post('/api/v1/accounts/', data, format='json')
+
+        # assert
         self.assertEqual(response.status_code, 400)
 
     def test_create_user_duplicate_username(self):
@@ -140,3 +149,27 @@ class AccountTests(TestCase):
         data = {'username': 'newuser', 'password': 'short'}
         response = self.client.post('/api/v1/accounts/', data, format='json')
         self.assertEqual(response.status_code, 400)
+
+
+# @tag('x')
+# class AccountTestTests(APITestCase):
+#     def setUp(self):
+#         # self.client = APIClient()
+#         self.user = AccountFactory.create()
+#         # self.admin_user = Account.objects.create_superuser(
+#         #     username='admin',
+#         #     email='admin@test.com',
+#         #     password='password'
+#         # )
+#         self.client.force_authenticate(user=self.user)
+#
+#
+#     def test_get_accounts_list_fields_1(self):
+#         url = reverse('account-list')
+#         response = self.client.get(url)
+#         self.assertEqual(response.status_code, 200)
+#         data = response.json()
+#         expected_keys = {'username', 'first_name', 'last_name', 'email'}
+#
+#         for account in data:
+#             self.assertEqual(set(account.keys()), expected_keys)

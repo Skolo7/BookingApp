@@ -74,10 +74,10 @@ class ReserveDeskView(LoginRequiredMixin, View):
                 messages.error(request, "Cannot reserve for past days.")
                 return self.get(request)
 
-            if reservation_type == 'room':
+            if reservation_type == 'ROOM':
                 reservation.room = Room.objects.get(number=number)
                 reservation.type = 'ROOM'
-            elif reservation_type == 'desk':
+            elif reservation_type == 'DESK':
                 reservation.desk = Desk.objects.get(number=number)
                 reservation.type = 'DESK'
 

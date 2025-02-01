@@ -1,18 +1,17 @@
 import datetime
+
 from django.contrib import messages
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.http import HttpResponse
 from django.shortcuts import redirect, render
+from django.urls import reverse
 from django.utils import timezone
 from django.views import View
 from icecream import ic
-from django.http import HttpResponse
-from django.urls import reverse
-
 
 from ..forms import FilterAvailabilityForm, ReserveForm
 from ..models.products import Desk, Room
 from ..models.reservations import Reservation
-
 
 
 class FilterDeskView(LoginRequiredMixin, View):
@@ -31,8 +30,6 @@ class FilterDeskView(LoginRequiredMixin, View):
         else:
             messages.error(request, "form is incorrect")
             return redirect(reverse('reserve'))
-
-
 
 
 class ReserveDeskView(LoginRequiredMixin, View):
@@ -74,10 +71,10 @@ class ReserveDeskView(LoginRequiredMixin, View):
                 messages.error(request, "Cannot reserve for past days.")
                 return self.get(request)
 
-            if reservation_type == 'room':
+            if reservation_type == 'ROOM':
                 reservation.room = Room.objects.get(number=number)
                 reservation.type = 'ROOM'
-            elif reservation_type == 'desk':
+            elif reservation_type == 'DESK':
                 reservation.desk = Desk.objects.get(number=number)
                 reservation.type = 'DESK'
 
@@ -123,7 +120,9 @@ class ReserveDeskView(LoginRequiredMixin, View):
         }
         return available_desks
 
-    def get_available_rooms(self, start_date: datetime.datetime, end_date: datetime.datetime) -> set[Room]:
+    def get_available_rooms(
+        self, start_date: datetime.datetime, end_date: datetime.datetime
+    ) -> set[Room]:
         available_rooms = set(Room.objects.all()) - {
             reservation.room
             for reservation in Reservation.objects.filter(

@@ -50,11 +50,9 @@ class ReserveParkingView(LoginRequiredMixin, View):
             parking_number = form.data['parking_number']
             reservation.parking = Parking.objects.get(number=parking_number)
             reservation.save()
-            messages.success(
-                request, 'Rezerwacja miejsca parkingowego została pomyślnie utworzona.'
-            )
+            messages.success(request, 'Reservation complete')
         else:
-            messages.error(request, 'Wystąpił błąd podczas tworzenia rezerwacji.')
+            messages.error(request, 'Error')
         return self.get(request)
 
     def get_filtered_parkings(self, form):
@@ -71,7 +69,7 @@ class ReserveParkingView(LoginRequiredMixin, View):
         all_parkings = set(Parking.objects.all())
         return all_parkings - reserved_parkings_today
 
-    def render_with_form_and_default_parkings(self, request, form, parkings, today):  # TODO Typing
+    def render_with_form_and_default_parkings(self, request, form, parkings, today):
         context = {
             'all_parkings': parkings,
             'today': today,
@@ -80,7 +78,7 @@ class ReserveParkingView(LoginRequiredMixin, View):
         }
         return render(request, self.template_name, context=context)
 
-    def get_available_parkings(self, start_date, end_date): # TODO Typing
+    def get_available_parkings(self, start_date, end_date):
         available_parkings = set(Parking.objects.all()) - {
             reserv.parking
             for reserv in Reservation.objects.filter(

@@ -8,9 +8,8 @@ from .env import env
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-ENV_DIR = Path(__file__).resolve().parent.parent.parent
 
-environ.Env.read_env(os.path.join(ENV_DIR, '.env'))
+environ.Env.read_env(os.path.join(BASE_DIR.parent, '.env')) # Nie ma potrzeby dodatkowej zmiennej. 
 
 
 SECRET_KEY = env('SECRET_KEY')
@@ -85,9 +84,6 @@ TEMPLATES = [
 WSGI_APPLICATION = 'core.wsgi.application'
 
 
-# Database
-# https://docs.djangoproject.com/en/4.1/ref/settings/#databases
-
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
@@ -115,10 +111,11 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-# AUTHENTICATION_BACKENDS = [
-#     # 'axes.backends.AxesStandaloneBackend',
-#     'django.contrib.auth.backends.ModelBackend',
-# ]
+
+AUTHENTICATION_BACKENDS = [
+    # 'axes.backends.AxesStandaloneBackend',
+    'django.contrib.auth.backends.ModelBackend',
+]
 
 
 LANGUAGE_CODE = 'en-us'
@@ -135,7 +132,6 @@ STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 LOGIN_REDIRECT_URL = '/'
 LOGIN_URL = reverse_lazy('login')
-# LOGOUT_REDIRECT_URL = 'login/'
 MEDIA_URL = '/media/'
 MEDIA_ROOT = BASE_DIR / 'media'
 
@@ -158,14 +154,12 @@ LOGGING = {
 }
 
 
-# EMAIL_BACKEND = "django.core.mail.backend.smtp.EmailBackend"
-EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"
-# EMAIL_BACKEND = "django.core.mail.backends.filebased.EmailBackend"
-# EMAIL_FILE_PATH = BASE_DIR / "sent_emails"
-# EMAIL_HOST = "smtp.gmail.com"
-# EMAIL_USE_TLS = True
-# EMAIL_PORT = 587
-# EMAIL_HOST_USER = ''
-# EMAIL_HOST_USER = env('EMAIL_HOST_USER')
-# EMAIL_HOST_PASSWORD = ''
-# EMAIL_HOST_PASSWORD = env('EMAIL_HOST_PASSWORD')
+if DEBUG:
+    EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"
+else:
+    EMAIL_BACKEND = "django.core.mail.backend.smtp.EmailBackend"
+    EMAIL_HOST = "smtp.gmail.com"
+    EMAIL_USE_TLS = True
+    EMAIL_PORT = 587
+    EMAIL_HOST_USER = env('EMAIL_HOST_USER')
+    EMAIL_HOST_PASSWORD = env('EMAIL_HOST_PASSWORD')

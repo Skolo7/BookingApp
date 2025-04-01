@@ -82,8 +82,6 @@ class TestReserveDeskView2(TestCase):
         self.assertEqual(Reservation.objects.count(), 0)
 
     def test_concurrent_reservation_attempts(self):
-        from icecream import ic
-
         today = timezone.now().date()
         Reservation.objects.create(
             desk=self.desk1, start_date=today, end_date=today, person=self.another_user

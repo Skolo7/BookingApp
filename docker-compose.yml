@@ -1,7 +1,7 @@
 services:
   web:
     build: .
-    command: poetry run python booking_app/manage.py runserver 0.0.0.0:8000
+    command: python booking_app/manage.py runserver 0.0.0.0:8000
     volumes:
       - .:/app
     ports:
@@ -27,14 +27,3 @@ services:
       timeout: 5s
       retries: 5
       start_period: 10s
-
-#
-#  tests:
-#    build: .
-#    command:
-#      - python manage.py test users
-#    volumes:
-#      - .:/code
-#    depends_on:
-#      - db
-

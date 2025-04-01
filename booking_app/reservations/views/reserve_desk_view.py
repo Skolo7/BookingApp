@@ -1,4 +1,7 @@
 import datetime
+from typing import Any
+from urllib.parse import urlencode
+
 
 from django.contrib import messages
 from django.contrib.auth.mixins import LoginRequiredMixin
@@ -14,22 +17,44 @@ from ..models.products import Desk, Room
 from ..models.reservations import Reservation
 
 
+# class FilterDeskView(LoginRequiredMixin, View):
+#     def post(self, request, *args, **kwargs):
+#         form = FilterAvailabilityForm(request.POST)
+#         if form.is_valid():
+#             start_date = form.cleaned_data['start_date']
+#             end_date = form.cleaned_data['end_date']
+#             start_date_param = start_date.strftime("%Y-%m-%d")
+#             end_date_param = end_date.strftime("%Y-%m-%d")
+
+#             url = reverse('reserve')
+#             query_params = f'?start_date={start_date_param}&end_date={end_date_param}'
+
+#             return redirect(f'{url}{query_params}')
+#         else:
+#             messages.error(request, "form is incorrect")
+#             return redirect(reverse('reserve'))
+
+
+
 class FilterDeskView(LoginRequiredMixin, View):
-    def post(self, request, *args, **kwargs):
+    DATE_FORMAT = "%Y-%m-%d"
+    
+    def post(self, request: Any, *args: Any, **kwargs: Any) -> HttpResponse:
         form = FilterAvailabilityForm(request.POST)
-        if form.is_valid():
-            start_date = form.cleaned_data['start_date']
-            end_date = form.cleaned_data['end_date']
-            start_date_param = start_date.strftime("%Y-%m-%d")
-            end_date_param = end_date.strftime("%Y-%m-%d")
-
-            url = reverse('reserve')
-            query_params = f'?start_date={start_date_param}&end_date={end_date_param}'
-
-            return redirect(f'{url}{query_params}')
-        else:
-            messages.error(request, "form is incorrect")
+        
+        if not form.is_valid():
+            messages.error(request, "Invalid date range selection.")
             return redirect(reverse('reserve'))
+            
+        query_params = self._get_date_query_params(form.cleaned_data)
+        return redirect(f"{reverse('reserve')}?{query_params}")
+    
+    def _get_date_query_params(self, cleaned_data: dict) -> str:
+        params = {
+            'start_date': cleaned_data['start_date'].strftime(self.DATE_FORMAT),
+            'end_date': cleaned_data['end_date'].strftime(self.DATE_FORMAT)
+        }
+        return urlencode(params)
 
 
 class ReserveDeskView(LoginRequiredMixin, View):

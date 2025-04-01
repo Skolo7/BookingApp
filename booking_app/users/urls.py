@@ -1,7 +1,7 @@
 from django.contrib.auth import views
 from django.urls import path
 from .API.routers import router
-from .views import AccountUpdateView, CustomLogoutView, LoginView, RegisterView
+from .views import AccountUpdateView, LoginView, RegisterView
 
 password_change_patterns = [
     path(
@@ -34,7 +34,7 @@ password_change_patterns = [
 urlpatterns = [
     path('users/register/', RegisterView.as_view(), name='register'),
     path('users/login/', LoginView.as_view(), name='login'),
-    path('users/logout/', CustomLogoutView.as_view(), name='logout'),
+    path('users/logout/', views.LogoutView.as_view(), name='logout'),
     path('profile/', AccountUpdateView.as_view(), name='profile'),
 ]
 

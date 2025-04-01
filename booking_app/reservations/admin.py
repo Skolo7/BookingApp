@@ -25,4 +25,4 @@ class AdminParking(admin.ModelAdmin):
 
 @admin.register(Room)
 class AdminRoom(admin.ModelAdmin):
-    list_display = ('number', 'max_amount_of_people', 'status', 'type')
+    list_display = ('number', 'max_amount_of_people', 'status', 'type', )

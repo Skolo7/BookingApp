@@ -7,4 +7,4 @@ class AccountsSerializer(serializers.ModelSerializer):
         model = Account
         fields = ['username', 'first_name',
                   'last_name', 'email', 'is_staff',
-                  'is_active', 'date_joined', 'profile_picture']
+                  'is_active', 'date_joined', 'profile_picture', ] # zawsze na końcu przeicnek to ładnie sformatuje.

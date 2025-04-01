@@ -4,14 +4,13 @@ from .states import ProductState
 
 
 class Parking(models.Model):
-    number = models.PositiveIntegerField()
+    number = models.PositiveIntegerField(help_text="Unique parking spot number")
     status = models.CharField(
-        max_length=10, choices=ProductState.choices, default=ProductState.AVAILABLE
+        max_length=10, choices=ProductState.choices, default=ProductState.AVAILABLE, 
+        help_text="Current status of the parking spot"
     )
-    #
-    #
-    # def __str__(self):
-    #     return str(self.number) or ''
+
+
 
 
 class Room(models.Model):
@@ -21,16 +20,30 @@ class Room(models.Model):
         GREEN_ROOM = "green_room", "green_room"
         BLUE_ROOM = "blue_room", "blue_room"
 
-    name = models.CharField(max_length=20)
-    number = models.PositiveIntegerField()
-    max_amount_of_people = models.PositiveIntegerField()
-    status = models.CharField(
-        max_length=10, choices=ProductState.choices, default=ProductState.AVAILABLE
+    name = models.CharField(
+        max_length=20,
+        help_text="Name identifier for the room"
     )
-    type = models.CharField(max_length=15, choices=RoomTypes.choices)
+    number = models.PositiveIntegerField(
+        help_text="Unique room number"
+    )
+    max_amount_of_people = models.PositiveIntegerField(
+        help_text="Maximum number of people allowed in the room"
+    )
+    status = models.CharField(
+        max_length=10, 
+        choices=ProductState.choices, 
+        default=ProductState.AVAILABLE,
+        help_text="Current status of the room"
+    )
+    type = models.CharField(
+        max_length=15, 
+        choices=RoomTypes.choices,
+        help_text="Type/color designation of the room"
+    )
 
-    def __str__(self):
-        return str(self.type)
+    def __str__(self) -> str:
+        return f"{str(self.type)}"
 
 
 class Desk(models.Model):
@@ -40,12 +53,21 @@ class Desk(models.Model):
         MEDIUM_DESK = "medium_desk", "medium_desk"
         LARGE_DESK = "large_desk", "large_desk"
 
-    name = models.CharField(max_length=20)
-    number = models.PositiveIntegerField()
-    status = models.CharField(
-        max_length=15, choices=ProductState.choices, default=ProductState.AVAILABLE
+    name = models.CharField(
+        max_length=20,
+        help_text="Name identifier for the desk"
     )
-    type = models.CharField(max_length=15, choices=DeskTypes.choices)
-
-    # def __str__(self):
-    #     return str(self.number)
+    number = models.PositiveIntegerField(
+        help_text="Unique desk number"
+    )
+    status = models.CharField(
+        max_length=15, 
+        choices=ProductState.choices, 
+        default=ProductState.AVAILABLE,
+        help_text="Current status of the desk"
+    )
+    type = models.CharField(
+        max_length=15, 
+        choices=DeskTypes.choices,
+        help_text="Size/type designation of the desk"
+    )

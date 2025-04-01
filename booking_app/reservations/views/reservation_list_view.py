@@ -3,7 +3,7 @@ from django.views.generic import ListView
 
 from ..models.reservations import Reservation
 
-
+# view na końcu pliku niepotrzenbe. 
 class ReservationListView(LoginRequiredMixin, ListView):
     model = Reservation
     template_name = 'reservations_template.html'

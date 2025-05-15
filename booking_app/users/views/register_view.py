@@ -25,6 +25,8 @@ class RegisterView(View):
                 request,
                 f"Account was created for {form.cleaned_data['username']}",
             )
+            logger.info(f"New user account: {username} ({email})")
             return redirect('login')
-
+        else:
+            logger.warning(f"Failed registration attempt: {form.errors}")
         return render(request, self.template_name, {'form': form})

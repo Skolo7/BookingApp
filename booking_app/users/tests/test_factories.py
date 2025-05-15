@@ -1,6 +1,4 @@
 from django.test import TestCase, tag
-from django.urls import reverse
-from rest_framework import status
 
 from ..factories import AccountFactory
 from ..models import Account
@@ -17,4 +15,3 @@ class AccountFactoriesTest(TestCase):
         self.assertEqual(Account.objects.count(), 5)
 
 
-# python manage.py test --tag='factories'

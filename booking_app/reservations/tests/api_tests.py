@@ -19,9 +19,6 @@ class ReservationsTests(TestCase):
             username='user', email='user@test.com', password='password'
         )
         create_desks()
-        # self.client.force_authenticate(user=self.admin_user)
-        # self.client.force_authenticate(user=self.normal_user)
-
     def test_get_reservations_list(self):
         self.client.force_authenticate(user=self.admin_user)
         # headers = {'Beaer token'}

@@ -41,33 +41,9 @@ class ReserveForm(forms.ModelForm):
             raise ValidationError('Start date cannot be after end date.')
         
         return cleaned_data
-    
-    # def clean(self):
-    #     cleaned_data = super().clean()
-    #     start_date = cleaned_data.get('start_date')
-    #     end_date = cleaned_data.get('end_date')
-    #     if start_date and end_date and start_date > end_date:
-    #         raise ValidationError('Start date cannot be after end date.')
-    #     return cleaned_data
-
 
 
 class FilterAvailabilityForm(forms.Form):
-    # start_date = forms.DateField(
-    #     widget=DateInput(
-    #         attrs={'class': 'form-control', 'placeholder': 'Select start date'}
-    #     )
-    # )
-    # end_date = forms.DateField(
-    #     widget=DateInput(
-    #         attrs={
-    #             'class': 'form-control',
-    #             'type': 'date',
-    #             'placeholder': 'Select end date',
-    #         }
-    #     )
-    # )
-
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         default_attrs = {
@@ -94,15 +70,6 @@ class FilterAvailabilityForm(forms.Form):
             raise ValidationError('Start date cannot be after end date.')
         
         return cleaned_data
-
-    # def clean(self):
-    #     cleaned_date = super().clean()
-    #     start_date = cleaned_date.get('start_date')
-    #     end_date = cleaned_date.get('end_date')
-    #     if start_date and end_date and start_date > end_date:
-    #         raise ValidationError('Start date cannot be after end date.')
-    #     return cleaned_date
-
 
 class SingleReservationForm(forms.ModelForm):
     class Meta:

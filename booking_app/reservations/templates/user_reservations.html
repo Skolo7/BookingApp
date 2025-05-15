@@ -1,36 +1,127 @@
+{#{% extends "index.html" %}#}
+{#{% load static %}#}
+{#{% block content %}#}
+{#// Wyzbyć się <!DoctypeHTML> Head nadpisywać przez zmienną może? tzn tak jak block content. #}
+{#    <!DOCTYPE html>#}
+{#    <html>#}
+{#        <head>#}
+{#            <title>My Reservations</title>#}
+{#        </head>#}
+{#        <body>#}
+{#            <h1>Reservations:</h1>#}
+{#            <table class="table">#}
+{#                <thead>#}
+{#                    <tr>#}
+{#                        <th scope="col">ID</th>#}
+{#                        <th scope="col">First Name</th>#}
+{#                        <th scope="col">Last Name</th>#}
+{#                        <th scope="col">Date</th>#}
+{#                        <th scope="col">Object</th>#}
+{#                    </tr>#}
+{#                </thead>#}
+{#                {% for reservation, num in reservations, range(1, len(reservations)) %}#}
+{#                    <tbody>#}
+{#                        <tr>#}
+{#                            <th scope="row">num</th>#}
+{#                            <td>{{ reservation.id }}</td>#}
+{#                            <td>{{ reservation.person_id }}</td>#}
+{#                            <td></td>#}
+{#                            <td>{{ reservation.start_date }}{{ reservation.end_date }}</td>#}
+{#                            <td>{{ reservation.type }}</td>#}
+{#                        </tr>#}
+{#                    </tbody>#}
+{#                </table>#}
+{#            </body>#}
+{#        </html>#}
+{#{% endblock %}#}
+
+
 {% extends "index.html" %}
 {% load static %}
 {% block content %}
-// Wyzbyć się <!DoctypeHTML> Head nadpisywać przez zmienną może? tzn tak jak block content. 
-    <!DOCTYPE html>
-    <html>
-        <head>
-            <title>My Reservations</title>
-        </head>
-        <body>
-            <h1>Reservations:</h1>
-            <table class="table">
-                <thead>
-                    <tr>
-                        <th scope="col">ID</th>
-                        <th scope="col">First Name</th>
-                        <th scope="col">Last Name</th>
-                        <th scope="col">Date</th>
-                        <th scope="col">Object</th>
-                    </tr>
-                </thead>
-                {% for reservation, num in reservations, range(1, len(reservations)) %}
-                    <tbody>
-                        <tr>
-                            <th scope="row">num</th>
-                            <td>{{ reservation.id }}</td>
-                            <td>{{ reservation.person_id }}</td>
-                            <td></td>
-                            <td>{{ reservation.start_date }}{{ reservation.end_date }}</td>
-                            <td>{{ reservation.type }}</td>
-                        </tr>
-                    </tbody>
-                </table>
-            </body>
-        </html>
+    <div class="container-fluid py-4 px-5">
+        <div class="row">
+            <div class="col-12">
+                <div class="card border shadow-xs mb-4">
+                    <div class="card-header border-bottom pb-0 d-sm-flex align-items-center">
+                        <div>
+                            <h6 class="font-weight-semibold text-lg mb-0">Reservations</h6>
+                            <p class="text-sm">Your current reservations list</p>
+                        </div>
+                        <div class="ms-auto d-flex">
+                            reserve" class="btn btn-sm btn-dark btn-icon d-flex align-items-center me-2">
+                            <span class="btn-inner--icon">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" class="d-block me-2">
+                  <path d="M12 5v14m-7-7h14" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round"/>
+                </svg>
+              </span>
+                        </div>
+                    </div>
+                    <div class="card-body px-0 py-0">
+                        <div class="table-responsive p-0">
+                            <table class="table align-items-center mb-0">
+                                <thead class="bg-gray-100">
+                                <tr>
+                                    <th class="text-secondary text-xs font-weight-semibold opacity-7">ID</th>
+                                    <th class="text-secondary text-xs font-weight-semibold opacity-7 ps-2">First Name
+                                    </th>
+                                    <th class="text-secondary text-xs font-weight-semibold opacity-7 ps-2">Last Name
+                                    </th>
+                                    <th class="text-center text-secondary text-xs font-weight-semibold opacity-7">Date
+                                    </th>
+                                    <th class="text-center text-secondary text-xs font-weight-semibold opacity-7">
+                                        Object
+                                    </th>
+                                    <th class="text-secondary opacity-7"></th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                {% for reservation in reservations %}
+                                    <tr>
+                                        <td class="text-sm font-weight-semibold">{{ reservation.id }}</td>
+                                        {#                  <td class="text-sm">{{ reservation.first_name }}</td>#}
+                                        <td class="text-sm font-weight-semibold">{{ reservation.person.first_name }}</td>
+
+                                        <td class="text-sm">{{ reservation.person.last_name }}</td>
+                                        <td class="text-center text-sm">{{ reservation.start_date }}{{ " - " }}{{ reservation.end_date }}</td>
+                                        <td class="text-center text-sm">{{ reservation.type }}</td>
+                                        <td class="align-middle">
+                                            <a href="" class="text-secondary font-weight-bold text-xs"
+                                               data-bs-toggle="tooltip" data-bs-title="Edit reservation">
+                                                <svg width="14" height="14" viewBox="0 0 15 16" fill="none"
+                                                     xmlns="http://www.w3.org/2000/svg">
+                                                    <path d="M11.22 2.025c-.39-.39-1.023-.39-1.414 0L9.806 2.64l2.121 2.12 0.001-.001c.391-.392.391-1.025 0-1.416l-1.487-1.311z"
+                                                          fill="#64748B"/>
+                                                    <path d="M12.557 6.185c.391.39.391 1.023 0 1.414l-1.412 1.411-2.12-2.121L10.438 6.185c.391-.39 1.024-.39 1.119-.001z"
+                                                          fill="#64748B"/>
+                                                    <path d="M11.68 1.568l.706.708-2.121 2.121-.707-.707 2.122-2.122z"
+                                                          fill="#64748B"/>
+                                                    <path d="M14.43 4.313l.707.707-1.415 1.414-.708-.707L14.43 4.313z"
+                                                          fill="#64748B"/>
+                                                </svg>
+                                            </a>
+                                        </td>
+                                    </tr>
+                                    {% empty %}
+                                    <tr>
+                                        <td colspan="6" class="text-center">No reservations found.</td>
+                                    </tr>
+                                {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                        {#          <div class="border-top py-3 px-3 d-flex align-items-center">#}
+                        {#            <p class="font-weight-semibold mb-0 text-dark text-sm">Page 1 of 10</p>#}
+                        {#            <div class="ms-auto">#}
+                        {#              <a href="#" class="btn btn-sm btn-white mb-0">Previous</a>#}
+                        {#              <a href="#" class="btn btn-sm btn-white mb-0">Next</a>#}
+                        {#            </div>#}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    </div>
 {% endblock %}
+

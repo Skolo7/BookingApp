@@ -13,18 +13,6 @@ from ..models.products import Parking
 from ..models.reservations import Reservation
 
 
-# class FilterParkingView(LoginRequiredMixin, View):
-#     def post(self, request, *args, **kwargs):
-#         form = FilterAvailabilityForm(request.POST)
-
-#         start_date, end_date = (
-#             form.cleaned_data['start_date'],
-#             form.cleaned_data['end_date'],
-#         )
-#         request.session['start_date'] = start_date.strftime("%Y-%m-%d")
-#         request.session['end_date'] = end_date.strftime("%Y-%m-%d")
-#         return redirect('parking')
-
 class FilterParkingView(LoginRequiredMixin, View):
     DATE_FORMAT = "%Y-%m-%d"
     

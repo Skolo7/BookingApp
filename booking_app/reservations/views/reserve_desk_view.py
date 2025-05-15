@@ -11,30 +11,13 @@ from django.urls import reverse
 from django.utils import timezone
 from django.views import View
 from icecream import ic
+import logging
 
 from ..forms import FilterAvailabilityForm, ReserveForm
 from ..models.products import Desk, Room
 from ..models.reservations import Reservation
 
-
-# class FilterDeskView(LoginRequiredMixin, View):
-#     def post(self, request, *args, **kwargs):
-#         form = FilterAvailabilityForm(request.POST)
-#         if form.is_valid():
-#             start_date = form.cleaned_data['start_date']
-#             end_date = form.cleaned_data['end_date']
-#             start_date_param = start_date.strftime("%Y-%m-%d")
-#             end_date_param = end_date.strftime("%Y-%m-%d")
-
-#             url = reverse('reserve')
-#             query_params = f'?start_date={start_date_param}&end_date={end_date_param}'
-
-#             return redirect(f'{url}{query_params}')
-#         else:
-#             messages.error(request, "form is incorrect")
-#             return redirect(reverse('reserve'))
-
-
+logger = logging.getLogger(__name__)
 
 class FilterDeskView(LoginRequiredMixin, View):
     DATE_FORMAT = "%Y-%m-%d"
@@ -86,6 +69,12 @@ class ReserveDeskView(LoginRequiredMixin, View):
     def post(self, request, *args, **kwargs):
         form = ReserveForm(request.POST)
         today = timezone.now().date()
+        user = request.user
+        desk_id = request.POST.get('desk_id')
+        start_date = request.POST.get('start_date')
+        end_date = request.POST.get('end_date')
+
+        logger.info(f"reserving desk {desk_id} by user {user.username} from {start_date} to {end_date}")
 
         if form.is_valid():
             reservation = form.save(commit=False)
@@ -105,6 +94,8 @@ class ReserveDeskView(LoginRequiredMixin, View):
 
             reservation.save()
             messages.success(request, 'Reservation confirmed.')
+            logger.info(f"Desk {desk_id} successfully reserved by user {user.username}")
+
         else:
             messages.error(request, 'Reservation failure.')
         return self.get(request)

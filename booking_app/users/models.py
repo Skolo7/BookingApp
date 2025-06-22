@@ -12,6 +12,7 @@ class Account(AbstractUser):
         null=True,
         default='profile_pics/Profile_pic.png',
     )
+    email = models.EmailField("email address", blank=True, unique=True)
 
     def __str__(self) -> str:
         return self.username if self.username else "Unnamed Account"

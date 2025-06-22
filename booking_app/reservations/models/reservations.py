@@ -67,3 +67,22 @@ class Reservation(models.Model):
         choices=ReservationTypes.choices,
         help_text="Type of reservation (desk, room, or parking)"
     )
+
+    class Meta:
+        constraints = [
+            models.UniqueConstraint(
+                fields=['desk', 'start_date', 'end_date'],
+                name='unique_desk_reservation_per_period',
+                condition=models.Q(desk__isnull=False)
+            ),
+            models.UniqueConstraint(
+                fields=['room', 'start_date', 'end_date'],
+                name='unique_room_reservation_per_period',
+                condition=models.Q(room__isnull=False)
+            ),
+            models.UniqueConstraint(
+                fields=['parking', 'start_date', 'end_date'],
+                name='unique_parking_reservation_per_period',
+                condition=models.Q(parking__isnull=False)
+            ),
+        ]

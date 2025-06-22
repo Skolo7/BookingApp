@@ -58,7 +58,8 @@ class Desk(models.Model):
         help_text="Name identifier for the desk"
     )
     number = models.PositiveIntegerField(
-        help_text="Unique desk number"
+        help_text="Unique desk number",
+        unique=True
     )
     status = models.CharField(
         max_length=15, 

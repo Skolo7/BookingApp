@@ -1,2 +1,2 @@
-# from .api_tests import *
+from .api_tests import *
 from .reserve_tests import *

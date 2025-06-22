@@ -8,6 +8,8 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.http import HttpResponse
 from django.shortcuts import redirect, render
 from django.urls import reverse
+from django.db import IntegrityError
+
 from django.utils import timezone
 from django.views import View
 from icecream import ic
@@ -85,14 +87,20 @@ class ReserveDeskView(LoginRequiredMixin, View):
                 messages.error(request, "Cannot reserve for past days.")
                 return self.get(request)
 
-            reservation.desk = Desk.objects.get(number=number)
+
 
             if reservation_type == 'ROOM':
                 reservation.type = 'ROOM'
+                reservation.room = Room.objects.get(number=number)
             elif reservation_type == 'DESK':
                 reservation.type = 'DESK'
+                reservation.desk = Desk.objects.get(number=number)
+            try:
+                reservation.save()
+            except IntegrityError as e:
+                messages.error(request, "Reservation failed - this object is already reserved for selected dates")
+                logger.error("Reservation failed due to reserved dates")
 
-            reservation.save()
             messages.success(request, 'Reservation confirmed.')
             logger.info(f"Desk {desk_id} successfully reserved by user {user.username}")
 

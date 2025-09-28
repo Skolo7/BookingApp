@@ -8,12 +8,14 @@ from .views import (
     ReservationListView,
     ReserveDeskView,
     ReserveParkingView,
+    CustomDashboardView,
 )
 
 
 urlpatterns = [
+    path('/', CustomDashboardView.as_view(), name='dashboard'),
     path('admin/', admin.site.urls),
-    path('user_reservations/', ReservationListView.as_view(), name='user_reservations'),
+    path('user-reservations/', ReservationListView.as_view(), name='user-reservations'),
     path('reserve/', ReserveDeskView.as_view(), name='reserve'),
     path('parking/', ReserveParkingView.as_view(), name='parking'),
     path('filter-desks', FilterDeskView.as_view(), name='filter-desk-view'),

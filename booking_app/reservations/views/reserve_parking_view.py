@@ -3,6 +3,10 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.shortcuts import redirect, render
 from django.utils import timezone
 from django.views import View
+from django.http import HttpResponse, HttpRequest
+from typing import Any
+from django.shortcuts import redirect
+from django.contrib import messages
 
 from ..forms import FilterAvailabilityForm, ReserveForm
 from ..models.products import Parking
@@ -10,16 +14,23 @@ from ..models.reservations import Reservation
 
 
 class FilterParkingView(LoginRequiredMixin, View):
-    def post(self, request, *args, **kwargs):
+    DATE_FORMAT = "%Y-%m-%d"
+    
+    def post(self, request: HttpRequest, *args: Any, **kwargs: Any) -> HttpResponse:
         form = FilterAvailabilityForm(request.POST)
-
-        start_date, end_date = (
-            form.cleaned_data['start_date'],
-            form.cleaned_data['end_date'],
-        )
-        request.session['start_date'] = start_date.strftime("%Y-%m-%d")
-        request.session['end_date'] = end_date.strftime("%Y-%m-%d")
+        
+        if not form.is_valid():
+            messages.error(request, "Invalid date range selection.")
+            return redirect('parking')
+            
+        self._save_dates_to_session(request, form.cleaned_data)
         return redirect('parking')
+    
+    def _save_dates_to_session(self, request: HttpRequest, cleaned_data: dict) -> None:
+        request.session.update({
+            'start_date': cleaned_data['start_date'].strftime(self.DATE_FORMAT),
+            'end_date': cleaned_data['end_date'].strftime(self.DATE_FORMAT)
+        })
 
 
 class ReserveParkingView(LoginRequiredMixin, View):

@@ -1,15 +1,13 @@
-import logging
-
 from django.contrib.auth import logout
-from django.shortcuts import redirect
-from django.urls import reverse
+from django.shortcuts import render
 from django.views import View
 
 
-logger = logging.getLogger(__name__)
-
-
 class CustomLogoutView(View):
-    def get(self, request, *args, **kwargs):
+    def get(self, request):
         logout(request)
-        return redirect(reverse('login'))
+        return render(request, 'users/logout_template.html')
+
+    def post(self, request):
+        logout(request)
+        return render(request, 'users/logout_template.html')

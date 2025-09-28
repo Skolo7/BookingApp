@@ -138,7 +138,6 @@
          navbar-scroll="true">
         <div class="container-fluid py-1 px-2">
             <nav aria-label="breadcrumb">
-                <!-- Poprawiony formularz filtrowania -->
                 <div class="filter-form">
                     <div class="filter-form-title">Filter Desk & Room Reservations</div>
                     <form method="post" id="scope" action="{% url 'filter-desk-view' %}">
@@ -146,10 +145,8 @@
                         <input type="hidden" name="form_type" value="scope">
 
                         <div class="form-row">
-                            <!-- Sprawdzamy jakie pola ma Twój filter_form i układamy je odpowiednio -->
                             {% for field in filter_form %}
                                 {% if 'date' in field.name or 'start' in field.name or 'end' in field.name %}
-                                    <!-- Pola dat grupujemy razem -->
                                     {% if forloop.first %}
                                         <div class="form-group">
                                             <label class="form-label">Date Range</label>
@@ -164,7 +161,6 @@
                                         </div>
                                     {% endif %}
                                 {% else %}
-                                    <!-- Inne pola -->
                                     <div class="form-group">
                                         <label class="form-label">{{ field.label }}</label>
                                         {{ field }}
@@ -172,7 +168,6 @@
                                 {% endif %}
                             {% endfor %}
 
-                            <!-- Przycisk submit -->
                             <div class="form-group submit-group">
                                 <button type="submit" class="btn btn-filter">
                                     <i class="fas fa-search"></i> Filter

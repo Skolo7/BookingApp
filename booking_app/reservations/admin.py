@@ -5,7 +5,7 @@ from .models import Desk, Parking, Reservation, Room
 
 @admin.register(Reservation)
 class AdminReservation(admin.ModelAdmin):
-    list_display = ('start_date', 'end_date', 'desk', 'room', 'parking')
+    list_display = ('id', 'person', 'start_date', 'end_date', 'desk', 'room', 'parking')
 
 
 @admin.register(Desk)

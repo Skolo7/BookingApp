@@ -10,7 +10,7 @@ import sys
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 
-environ.Env.read_env(os.path.join(BASE_DIR.parent, '.env'))
+environ.Env.read_env(os.path.join(BASE_DIR, '.env'))
 
 
 SECRET_KEY = env('SECRET_KEY')
@@ -161,9 +161,15 @@ USE_TZ = True
 
 
 STATIC_URL = '/static/'
-STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, 'static')
+]
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+
+
+
 LOGIN_REDIRECT_URL = '/'
+LOGOUT_URL = reverse_lazy('logout')
 LOGIN_URL = reverse_lazy('login')
 MEDIA_URL = '/media/'
 MEDIA_ROOT = BASE_DIR / 'media'

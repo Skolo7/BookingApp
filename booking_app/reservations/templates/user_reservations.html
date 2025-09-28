@@ -71,9 +71,7 @@
                                 {% for reservation in reservations %}
                                     <tr>
                                         <td class="text-sm font-weight-semibold">{{ reservation.id }}</td>
-                                        {#                  <td class="text-sm">{{ reservation.first_name }}</td>#}
                                         <td class="text-sm font-weight-semibold">{{ reservation.person.first_name }}</td>
-
                                         <td class="text-sm">{{ reservation.person.last_name }}</td>
                                         <td class="text-center text-sm">{{ reservation.start_date }}{{ " - " }}{{ reservation.end_date }}</td>
                                         <td class="text-center text-sm">{{ reservation.type }}</td>
@@ -91,17 +89,28 @@
                                 </tbody>
                             </table>
                         </div>
-                        {#          <div class="border-top py-3 px-3 d-flex align-items-center">#}
-                        {#            <p class="font-weight-semibold mb-0 text-dark text-sm">Page 1 of 10</p>#}
-                        {#            <div class="ms-auto">#}
-                        {#              <a href="#" class="btn btn-sm btn-white mb-0">Previous</a>#}
-                        {#              <a href="#" class="btn btn-sm btn-white mb-0">Next</a>#}
-                        {#            </div>#}
+                        <div class="border-top py-3 px-3 d-flex align-items-center">
+                            <p class="font-weight-semibold mb-0 text-dark text-sm">
+                                Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}
+                            </p>
+                            <div class="ms-auto">
+                                {% if page_obj.has_previous %}
+                                    <a href="?page={{ page_obj.previous_page_number }}" class="btn btn-sm btn-white mb-0">Previous</a>
+                                {% else %}
+                                    <a href="#" class="btn btn-sm btn-white mb-0 disabled">Previous</a>
+                                {% endif %}
+
+                                {% if page_obj.has_next %}
+                                    <a href="?page={{ page_obj.next_page_number }}" class="btn btn-sm btn-white mb-0">Next</a>
+                                {% else %}
+                                    <a href="#" class="btn btn-sm btn-white mb-0 disabled">Next</a>
+                                {% endif %}
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
     </div>
 {% endblock %}
 

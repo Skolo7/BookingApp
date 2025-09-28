@@ -34,7 +34,6 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
-    image: django_celery_example_celery_worker
     command: /start-celeryworker
     volumes:
       - .:/app
@@ -48,7 +47,6 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
-    image: django_celery_example_celery_beat
     command: /start-celerybeat
     volumes:
       - .:/app
@@ -62,7 +60,6 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
-    image: django_celery_example_celery_flower
     command: /start-flower
     volumes:
       - .:/app

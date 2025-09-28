@@ -1,0 +1,145 @@
+{% block content %}
+    <!DOCTYPE html>
+    <html lang="en">
+        <head>
+            <meta charset="utf-8" />
+            <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+            <link rel="apple-touch-icon" sizes="76x76" href="../../../static/assets/img/apple-icon.png">
+            <link rel="icon" type="image/png" href="../../../static/assets/img/favicon.png">
+            <title>BookingApp - Logged Out</title>
+
+            <!-- Fonts and icons -->
+            <link href="../../../static/assets/css/nucleo-icons.css" rel="stylesheet" />
+            <link href="../../../static/assets/css/nucleo-svg.css" rel="stylesheet" />
+            <script src="https://kit.fontawesome.com/349ee9c857.js" crossorigin="anonymous"></script>
+
+            <!-- CSS Files -->
+            <link id="pagestyle" href="../../../static/assets/css/corporate-ui-dashboard.css?v=1.0.0" rel="stylesheet" />
+
+            <style>
+                /* Custom improvements */
+                body {
+                    background-color: #f8f9fa;
+                }
+
+                .main-content {
+                    background-color: #ffffff;
+                    min-height: 100vh;
+                }
+
+                .card-plain {
+                    background: #ffffff;
+                    border-radius: 15px;
+                    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+                    border: 1px solid #e9ecef;
+                }
+
+                .form-control {
+                    border-radius: 8px;
+                    border: 2px solid #dee2e6;
+                    padding: 15px 16px;
+                    font-size: 16px;
+                    transition: all 0.3s ease;
+                    background-color: #ffffff;
+                    color: #495057;
+                    width: 100%;
+                    display: block;
+                }
+
+                .btn-primary-custom {
+                    background-color: #007bff;
+                    border: none;
+                    border-radius: 8px;
+                    padding: 15px 24px;
+                    font-weight: 600;
+                    font-size: 16px;
+                    color: #ffffff;
+                    transition: all 0.3s ease;
+                }
+
+                .btn-primary-custom:hover {
+                    background-color: #0056b3;
+                    transform: translateY(-1px);
+                    box-shadow: 0 4px 12px rgba(0, 123, 255, 0.3);
+                    color: #ffffff;
+                }
+
+                .card-header h2 {
+                    color: #212529;
+                }
+
+                .text-muted {
+                    color: #6c757d !important;
+                }
+
+                .text-primary {
+                    color: #007bff !important;
+                }
+            </style>
+        </head>
+        <body>
+            <!-- Main Content -->
+            <main class="main-content mt-0">
+                <section class="min-vh-100 d-flex align-items-center">
+                    <div class="container">
+                        <div class="row justify-content-center">
+                            <div class="col-md-8">
+                                <!-- Messages -->
+                                {% if messages %}
+                                    {% for message in messages %}
+                                        <div class="alert alert-{{ message.tags }} mb-4">
+                                            {{ message }}
+                                        </div>
+                                    {% endfor %}
+                                {% endif %}
+                            </div>
+                        </div>
+
+                        <div class="row justify-content-center">
+                            <div class="col-lg-5 col-md-7">
+                                <div class="card card-plain mt-4">
+                                    <div class="card-header pb-3 text-center bg-transparent">
+                                        <h2 class="font-weight-bold">You've been logged out</h2>
+                                        <p class="text-muted mb-0">Thank you for using our application</p>
+                                    </div>
+
+                                    <div class="card-body px-4 py-4 text-center">
+                                        <p class="mb-4">You have been successfully logged out of your account.</p>
+                                        <div class="d-grid">
+                                            <a href="{% url 'login' %}" class="btn btn-primary-custom">
+                                                Sign In Again
+                                            </a>
+                                        </div>
+                                    </div>
+
+                                    <div class="card-footer text-center pt-3 px-4 pb-4">
+                                        <p class="mb-0">
+                                            Don't have an account?
+                                            <a href="{% url 'register' %}" class="text-primary text-decoration-none">Sign up here</a>
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </main>
+
+            <!-- Core JS Files -->
+            <script src="../../../static/assets/js/core/popper.min.js"></script>
+            <script src="../../../static/assets/js/core/bootstrap.min.js"></script>
+            <script src="../../../static/assets/js/plugins/perfect-scrollbar.min.js"></script>
+            <script src="../../../static/assets/js/plugins/smooth-scrollbar.min.js"></script>
+
+            <script>
+                var win = navigator.platform.indexOf('Win') > -1;
+                if (win && document.querySelector('#sidenav-scrollbar')) {
+                    var options = { damping: '0.5' }
+                    Scrollbar.init(document.querySelector('#sidenav-scrollbar'), options);
+                }
+            </script>
+
+            <script src="../../../static/assets/js/corporate-ui-dashboard.min.js?v=1.0.0"></script>
+        </body>
+    </html>
+{% endblock %}

@@ -1,0 +1,8 @@
+#!/bin/bash
+
+set -o errexit
+set -o nounset
+
+rm -f './celerybeat.pid'
+cd booking_app
+celery -A core beat -l INFO

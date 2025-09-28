@@ -8,9 +8,9 @@ readme = "README.md"
 package-mode = false
 
 [tool.poetry.dependencies]
-python = "^3.10"
+python = "^3.13"
 Django = "^5.0.4"
-psycopg2-binary = "^2.9.9"
+psycopg2-binary = "^2.9.10"
 django-environ = "^0.11.2"
 django-extensions = "^3.2.3"
 bootstrap4 = "^0.1.0"
@@ -21,6 +21,13 @@ coverage = "^7.6.1"
 djangorestframework = "^3.15.2"
 djangorestframework-simplejwt = "^5.3.1"
 factory-boy = "^3.3.1"
+rest-framework-simplejwt = "^0.0.2"
+plotly = "^6.2.0"
+pandas = "^2.3.1"
+celery = "^5.5.3"
+redis = "^6.2.0"
+flower= "2.0.1"
+
 
 
 [tool.poetry.group.dev.dependencies]

@@ -30,4 +30,5 @@ class AccountUpdateView(LoginRequiredMixin, UpdateView):
             form.save()
         else:
             return self.form_invalid(form)
+        
         return super().form_valid(form)

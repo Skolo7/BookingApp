@@ -150,26 +150,3 @@ class AccountTests(APITestCase):
         response = self.client.post('/api/v1/accounts/', data, format='json')
         self.assertEqual(response.status_code, 400)
 
-
-# @tag('x')
-# class AccountTestTests(APITestCase):
-#     def setUp(self):
-#         # self.client = APIClient()
-#         self.user = AccountFactory.create()
-#         # self.admin_user = Account.objects.create_superuser(
-#         #     username='admin',
-#         #     email='admin@test.com',
-#         #     password='password'
-#         # )
-#         self.client.force_authenticate(user=self.user)
-#
-#
-#     def test_get_accounts_list_fields_1(self):
-#         url = reverse('account-list')
-#         response = self.client.get(url)
-#         self.assertEqual(response.status_code, 200)
-#         data = response.json()
-#         expected_keys = {'username', 'first_name', 'last_name', 'email'}
-#
-#         for account in data:
-#             self.assertEqual(set(account.keys()), expected_keys)

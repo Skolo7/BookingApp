@@ -1,35 +1,45 @@
 import datetime
+from typing import Any
+from urllib.parse import urlencode
+
 
 from django.contrib import messages
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.http import HttpResponse
 from django.shortcuts import redirect, render
 from django.urls import reverse
+from django.db import IntegrityError
+
 from django.utils import timezone
 from django.views import View
 from icecream import ic
+import logging
 
 from ..forms import FilterAvailabilityForm, ReserveForm
 from ..models.products import Desk, Room
 from ..models.reservations import Reservation
 
+logger = logging.getLogger(__name__)
 
 class FilterDeskView(LoginRequiredMixin, View):
-    def post(self, request, *args, **kwargs):
+    DATE_FORMAT = "%Y-%m-%d"
+    
+    def post(self, request: Any, *args: Any, **kwargs: Any) -> HttpResponse:
         form = FilterAvailabilityForm(request.POST)
-        if form.is_valid():
-            start_date = form.cleaned_data['start_date']
-            end_date = form.cleaned_data['end_date']
-            start_date_param = start_date.strftime("%Y-%m-%d")
-            end_date_param = end_date.strftime("%Y-%m-%d")
-
-            url = reverse('reserve')
-            query_params = f'?start_date={start_date_param}&end_date={end_date_param}'
-
-            return redirect(f'{url}{query_params}')
-        else:
-            messages.error(request, "form is incorrect")
+        
+        if not form.is_valid():
+            messages.error(request, "Invalid date range selection.")
             return redirect(reverse('reserve'))
+            
+        query_params = self._get_date_query_params(form.cleaned_data)
+        return redirect(f"{reverse('reserve')}?{query_params}")
+    
+    def _get_date_query_params(self, cleaned_data: dict) -> str:
+        params = {
+            'start_date': cleaned_data['start_date'].strftime(self.DATE_FORMAT),
+            'end_date': cleaned_data['end_date'].strftime(self.DATE_FORMAT)
+        }
+        return urlencode(params)
 
 
 class ReserveDeskView(LoginRequiredMixin, View):
@@ -61,6 +71,12 @@ class ReserveDeskView(LoginRequiredMixin, View):
     def post(self, request, *args, **kwargs):
         form = ReserveForm(request.POST)
         today = timezone.now().date()
+        user = request.user
+        desk_id = request.POST.get('desk_id')
+        start_date = request.POST.get('start_date')
+        end_date = request.POST.get('end_date')
+
+        logger.info(f"reserving desk {desk_id} by user {user.username} from {start_date} to {end_date}")
 
         if form.is_valid():
             reservation = form.save(commit=False)
@@ -71,15 +87,23 @@ class ReserveDeskView(LoginRequiredMixin, View):
                 messages.error(request, "Cannot reserve for past days.")
                 return self.get(request)
 
-            if reservation_type == 'ROOM':
-                reservation.room = Room.objects.get(number=number)
-                reservation.type = 'ROOM'
-            elif reservation_type == 'DESK':
-                reservation.desk = Desk.objects.get(number=number)
-                reservation.type = 'DESK'
 
-            reservation.save()
+
+            if reservation_type == 'ROOM':
+                reservation.type = 'ROOM'
+                reservation.room = Room.objects.get(number=number)
+            elif reservation_type == 'DESK':
+                reservation.type = 'DESK'
+                reservation.desk = Desk.objects.get(number=number)
+            try:
+                reservation.save()
+            except IntegrityError as e:
+                messages.error(request, "Reservation failed - this object is already reserved for selected dates")
+                logger.error("Reservation failed due to reserved dates")
+
             messages.success(request, 'Reservation confirmed.')
+            logger.info(f"Desk {desk_id} successfully reserved by user {user.username}")
+
         else:
             messages.error(request, 'Reservation failure.')
         return self.get(request)

@@ -1,7 +1,7 @@
 services:
   web:
     build: .
-    command: poetry run python booking_app/manage.py runserver 0.0.0.0:8000
+    command: python booking_app/manage.py runserver 0.0.0.0:8000
     volumes:
       - .:/app
     ports:
@@ -11,12 +11,11 @@ services:
     depends_on:
       db:
         condition: service_healthy
-
   db:
     image: postgres
     restart: always
     ports:
-      - "5432:5432"
+      - "5433:5432"
     environment:
       - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=postgres
@@ -28,13 +27,49 @@ services:
       retries: 5
       start_period: 10s
 
-#
-#  tests:
-#    build: .
-#    command:
-#      - python manage.py test users
-#    volumes:
-#      - .:/code
-#    depends_on:
-#      - db
+  redis:
+    image: redis:7-alpine
 
+  celery_worker:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    command: /start-celeryworker
+    volumes:
+      - .:/app
+    env_file:
+      - .env
+    depends_on:
+      - redis
+      - db
+
+  celery_beat:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    command: /start-celerybeat
+    volumes:
+      - .:/app
+    env_file:
+      - .env
+    depends_on:
+      - redis
+      - db
+
+  flower:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    command: /start-flower
+    volumes:
+      - .:/app
+    env_file:
+      - .env
+    ports:
+      - 5557:5555
+    depends_on:
+      - redis
+      - db
+
+volumes:
+  postgres_data:

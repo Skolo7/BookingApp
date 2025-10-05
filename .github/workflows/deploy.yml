@@ -21,14 +21,14 @@ jobs:
     - name: Pull latest code on VPS
       run: |
         ssh -o StrictHostKeyChecking=no ${{ secrets.VPS_USER }}@${{ secrets.VPS_HOST }} << 'EOF'
-          cd /var/www/booking_app
+          cd /var/www/BookingApp
           git pull origin main
         EOF
 
     - name: Deploy on VPS
       run: |
         ssh -o StrictHostKeyChecking=no ${{ secrets.VPS_USER }}@${{ secrets.VPS_HOST }} << 'EOF'
-          cd /var/www/booking_app
+          cd /var/www/BookingApp
           ./deploy.sh
         EOF
 

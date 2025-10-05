@@ -20,7 +20,7 @@ COPY --from=builder /usr/local/bin /usr/local/bin
 
 COPY . /app/
 
-RUN python app/manage.py collectstatic --noinput
+CMD ["python", "app/manage.py", "collectstatic", "--noinput", "--verbosity", "2"]
 
 EXPOSE 8000
 

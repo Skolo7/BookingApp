@@ -1,9 +1,11 @@
-FROM python 3.13 as base
+FROM python:3.13 as base
 
 ENV PYTHONDONTWRITEBYTECODE 1
 ENV PYTHONUNBUFFERED 1
 
 WORKDIR /app
+
+FROM base as builder
 
 RUN pip install poetry
 COPY poetry.lock pyproject.toml /app/
@@ -14,10 +16,12 @@ RUN poetry install --only=main --no-root
 FROM base as final
 
 COPY --from=builder /usr/local/lib/python3.13/site-packages /usr/local/lib/python3.13/site-packages
-COPY --from=builder  /usr/local/bin /usr/local/bin
+COPY --from=builder /usr/local/bin /usr/local/bin
 
 COPY . /app/
 
 RUN python booking_app/manage.py collectstatic --noinput
+
+EXPOSE 8000
 
 CMD ["gunicorn", "--bind", "0.0.0.0:8000", "--workers", "3", "--worker-class", "gevent", "--worker-connections", "1000", "booking_app.core.wsgi:application"]

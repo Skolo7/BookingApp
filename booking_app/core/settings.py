@@ -178,6 +178,9 @@ MEDIA_ROOT = BASE_DIR / 'media'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 if 'test' not in sys.argv:
+    LOGS_DIR = os.path.join(BASE_DIR, 'booking_app', 'logs')
+    os.makedirs(LOGS_DIR, exist_ok=True)
+
     LOGGING = {
         'version': 1,
         'disable_existing_loggers': False,

@@ -29,7 +29,6 @@ jobs:
       run: |
         ssh -o StrictHostKeyChecking=no ${{ secrets.VPS_USER }}@${{ secrets.VPS_HOST }} << 'EOF'
           cd /var/www/BookingApp
-          chmod +x deploy.sh
           ./deploy.sh
         EOF
 
